@@ -53,7 +53,6 @@ export default function Bookings() {
           <SectionHeading
             eyebrow="Book Online"
             title="Choose the type of appointment you need"
-            description="These forms are ready for Netlify Forms, so you can receive submissions directly after deployment."
             centered
           />
 
