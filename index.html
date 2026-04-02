@@ -1,17 +1,47 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EconoPro Services | Affordable Quality, Dependable Service</title>
-    <meta
-      name="description"
-      content="EconoPro Services provides flooring, drywall, painting, cleaning, and handyman services in Orlando and Tampa, FL. Request an onsite estimate or schedule a cleaning service online."
-    />
-    <link rel="icon" type="image/jpeg" href="/logo.jpg" />
-  </head>
-  <body class="bg-white">
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EconoPro Services | Affordable Quality, Dependable Service</title>
+  <meta name="description"
+    content="EconoPro Services provides flooring, drywall, painting, cleaning, and handyman services in Orlando and Tampa, FL. Request an onsite estimate or schedule a cleaning service online." />
+  <link rel="icon" type="image/jpeg" href="/logo.jpg" />
+</head>
+
+<body class="bg-white">
+  <div id="root"></div>
+
+  <form name="onsite-estimate" netlify netlify-honeypot="bot-field" hidden>
+    <input type="text" name="fullName" />
+    <input type="tel" name="phone" />
+    <input type="email" name="email" />
+    <input type="text" name="city" />
+    <input type="date" name="preferredDate" />
+    <input type="text" name="preferredTime" />
+    <input type="text" name="projectType" />
+    <input type="text" name="address" />
+    <textarea name="projectDetails"></textarea>
+    <input type="hidden" name="serviceType" value="Onsite Estimate" />
+    <input type="text" name="bot-field" />
+  </form>
+
+  <form name="cleaning-service" netlify netlify-honeypot="bot-field" hidden>
+    <input type="text" name="fullName" />
+    <input type="tel" name="phone" />
+    <input type="email" name="email" />
+    <input type="text" name="cleaningType" />
+    <input type="date" name="preferredDate" />
+    <input type="text" name="preferredTime" />
+    <input type="text" name="propertySize" />
+    <input type="text" name="address" />
+    <textarea name="details"></textarea>
+    <input type="hidden" name="serviceType" value="Cleaning Service" />
+    <input type="text" name="bot-field" />
+  </form>
+
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>
