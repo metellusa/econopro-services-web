@@ -19,13 +19,13 @@ const servicesPreview = [
         icon: HomeIcon,
         title: "Flooring Installation & Repair",
         description: "Durable, clean, professional flooring solutions.",
-        bullets: ["Vinyl plank", "Repairs", "Professional finish"],
+        bullets: ["Tile", "Vinyl plank", "Laminate", "Hardwood"],
     },
     {
         icon: Brush,
         title: "Drywall Services",
         description: "Repairs, patching, and texture matching.",
-        bullets: ["Drywall repair", "Texture matching", "Prep for paint"],
+        bullets: ["Drywall installation", "Drywall repair", "Texture matching"],
     },
     {
         icon: PaintBucket,
