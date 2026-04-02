@@ -78,7 +78,7 @@ export default function Bookings() {
                 method="POST"
                 data-netlify="true"
                 netlify-honeypot="bot-field"
-                action="/thank-you"
+                action="/thank-you.html"
                 className="mt-8 space-y-5"
               >
                 <input type="hidden" name="form-name" value="onsite-estimate" />
@@ -233,7 +233,7 @@ export default function Bookings() {
                 name="cleaning-service"
                 method="POST"
                 data-netlify="true"
-                action="/thank-you"
+                action="/thank-you.html"
                 netlify-honeypot="bot-field"
                 className="mt-8 space-y-5"
               >
