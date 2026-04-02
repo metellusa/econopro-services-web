@@ -1,5 +1,6 @@
 import { CalendarDays, Sparkles } from "lucide-react";
 import SectionHeading from "../components/SectionHeading";
+import { useNavigate } from "react-router-dom";
 
 const cleaningOptions = [
   "Standard Cleaning",
@@ -26,6 +27,27 @@ function baseFieldClass() {
 }
 
 export default function Bookings() {
+  const navigate = useNavigate();
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+
+    try {
+      await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData).toString(),
+      });
+
+      navigate("/thank-you");
+    } catch (error) {
+      alert("Something went wrong. Please try again.");
+    }
+  }
+
   return (
     <main>
       <section className="bg-hero-glow py-20">
@@ -78,7 +100,7 @@ export default function Bookings() {
                 method="POST"
                 data-netlify="true"
                 netlify-honeypot="bot-field"
-                action="/thank-you"
+                onSubmit={handleSubmit}
                 className="mt-8 space-y-5"
               >
                 <input type="hidden" name="form-name" value="onsite-estimate" />
@@ -233,7 +255,7 @@ export default function Bookings() {
                 name="cleaning-service"
                 method="POST"
                 data-netlify="true"
-                action="/thank-you"
+                onSubmit={handleSubmit}
                 netlify-honeypot="bot-field"
                 className="mt-8 space-y-5"
               >
