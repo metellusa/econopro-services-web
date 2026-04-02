@@ -21,7 +21,7 @@ export default function App() {
         <Route path="/faq" element={<Faq />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/thank-you" element={<ThankYou />} />
-        <Route path="*" element={<div>404 - Not Found</div>} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </SiteShell>
   );
