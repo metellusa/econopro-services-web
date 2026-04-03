@@ -1,47 +1,129 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EconoPro Services | Affordable Quality, Dependable Service</title>
-  <meta name="description"
-    content="EconoPro Services provides flooring, drywall, painting, cleaning, and handyman services in Orlando and Tampa, FL. Request an onsite estimate or schedule a cleaning service online." />
-  <link rel="icon" type="image/jpeg" href="/logo.jpg" />
-</head>
+    <title>
+      EconoPro Services | Flooring, Painting, Drywall & Cleaning in Orlando and Tampa, FL
+    </title>
 
-<body class="bg-white">
-  <div id="root"></div>
+    <meta
+      name="description"
+      content="EconoPro Services provides flooring installation and repair, drywall services, interior and exterior painting, house cleaning, and handyman services in Orlando, Tampa, and surrounding areas. Request an onsite estimate or schedule cleaning online."
+    />
 
-  <form name="onsite-estimate" netlify netlify-honeypot="bot-field" hidden>
-    <input type="text" name="fullName" />
-    <input type="tel" name="phone" />
-    <input type="email" name="email" />
-    <input type="text" name="city" />
-    <input type="date" name="preferredDate" />
-    <input type="text" name="preferredTime" />
-    <input type="text" name="projectType" />
-    <input type="text" name="address" />
-    <textarea name="projectDetails"></textarea>
-    <input type="hidden" name="serviceType" value="Onsite Estimate" />
-    <input type="text" name="bot-field" />
-  </form>
+    <meta
+      name="keywords"
+      content="Orlando handyman, Tampa handyman, flooring installation Orlando, flooring repair Orlando, drywall repair Orlando, interior painting Orlando, exterior painting Orlando, house cleaning Orlando, move-out cleaning Orlando, handyman services Tampa, home improvement Orlando, property maintenance Orlando"
+    />
 
-  <form name="cleaning-service" netlify netlify-honeypot="bot-field" hidden>
-    <input type="text" name="fullName" />
-    <input type="tel" name="phone" />
-    <input type="email" name="email" />
-    <input type="text" name="cleaningType" />
-    <input type="date" name="preferredDate" />
-    <input type="text" name="preferredTime" />
-    <input type="text" name="propertySize" />
-    <input type="text" name="address" />
-    <textarea name="details"></textarea>
-    <input type="hidden" name="serviceType" value="Cleaning Service" />
-    <input type="text" name="bot-field" />
-  </form>
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="EconoPro Services" />
+    <meta name="theme-color" content="#0f172a" />
 
-  <script type="module" src="/src/main.jsx"></script>
-</body>
+    <link rel="canonical" href="https://econoproservices.com/" />
+    <link rel="icon" type="image/jpeg" href="/logo.jpg" />
 
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="EconoPro Services" />
+    <meta property="og:title" content="EconoPro Services | Affordable Quality, Dependable Service" />
+    <meta
+      property="og:description"
+      content="Flooring, drywall, painting, cleaning, and handyman services in Orlando, Tampa, and surrounding areas."
+    />
+    <meta property="og:url" content="https://econoproservices.com/" />
+    <meta property="og:image" content="https://econoproservices.com/logo.jpg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="EconoPro Services | Affordable Quality, Dependable Service" />
+    <meta
+      name="twitter:description"
+      content="Flooring, drywall, painting, cleaning, and handyman services in Orlando, Tampa, and surrounding areas."
+    />
+    <meta name="twitter:image" content="https://econoproservices.com/logo.jpg" />
+
+    <!-- Local Business Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HomeAndConstructionBusiness",
+        "name": "EconoPro Services",
+        "url": "https://econoproservices.com/",
+        "logo": "https://econoproservices.com/logo.jpg",
+        "image": "https://econoproservices.com/logo.jpg",
+        "description": "EconoPro Services provides flooring installation and repair, drywall services, interior and exterior painting, house cleaning, and general property maintenance in Orlando, Tampa, and surrounding areas.",
+        "telephone": "+1-813-362-9287",
+        "email": "admin@econoproservices.com",
+        "areaServed": [
+          {
+            "@type": "City",
+            "name": "Orlando"
+          },
+          {
+            "@type": "City",
+            "name": "Tampa"
+          }
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "addressRegion": "FL",
+          "addressCountry": "US"
+        },
+        "openingHours": "Mo-Fr 08:00-20:00",
+        "priceRange": "$$",
+        "sameAs": []
+      }
+    </script>
+  </head>
+
+  <body class="bg-white">
+    <div id="root"></div>
+
+    <form
+      name="onsite-estimate"
+      method="POST"
+      action="/thank-you"
+      netlify
+      netlify-honeypot="bot-field"
+      hidden
+    >
+      <input type="text" name="fullName" />
+      <input type="tel" name="phone" />
+      <input type="email" name="email" />
+      <input type="text" name="city" />
+      <input type="date" name="preferredDate" />
+      <input type="text" name="preferredTime" />
+      <input type="text" name="projectType" />
+      <input type="text" name="address" />
+      <textarea name="projectDetails"></textarea>
+      <input type="hidden" name="serviceType" value="Onsite Estimate" />
+      <input type="text" name="bot-field" />
+    </form>
+
+    <form
+      name="cleaning-service"
+      method="POST"
+      action="/thank-you"
+      netlify
+      netlify-honeypot="bot-field"
+      hidden
+    >
+      <input type="text" name="fullName" />
+      <input type="tel" name="phone" />
+      <input type="email" name="email" />
+      <input type="text" name="cleaningType" />
+      <input type="date" name="preferredDate" />
+      <input type="text" name="preferredTime" />
+      <input type="text" name="propertySize" />
+      <input type="text" name="address" />
+      <textarea name="details"></textarea>
+      <input type="hidden" name="serviceType" value="Cleaning Service" />
+      <input type="text" name="bot-field" />
+    </form>
+
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>

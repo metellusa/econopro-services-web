@@ -14,7 +14,7 @@ const faqs = [
   {
     question: "What areas do you serve?",
     answer:
-      "EconoPro Services serves customers in the Orlando and Tampa, Florida areas.",
+      "EconoPro Services provides reliable service throughout Orlando, Tampa, and surrounding areas within a 25–30 mile radius.",
   },
   {
     question: "What cleaning services can be scheduled online?",

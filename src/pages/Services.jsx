@@ -18,22 +18,14 @@ const services = [
     title: "Flooring Installation & Repair",
     description:
       "Beautiful, durable flooring solutions for living spaces, rentals, and investment properties.",
-    bullets: [
-      "Luxury vinyl plank",
-      "Repairs and replacements",
-      "Clean, professional finishes",
-    ],
+    bullets: ["Tile", "Vinyl plank", "Laminate", "Hardwood"],
   },
   {
     icon: Brush,
     title: "Drywall Services",
     description:
       "From patchwork to full drywall updates, we help restore walls and ceilings with a polished look.",
-    bullets: [
-      "Drywall repair",
-      "Texture matching",
-      "Prep for painting",
-    ],
+    bullets: ["Drywall installation", "Drywall repair", "Texture matching"],
   },
   {
     icon: PaintBucket,
@@ -41,9 +33,7 @@ const services = [
     description:
       "Freshen up your property with careful prep, crisp lines, and high-quality workmanship.",
     bullets: [
-      "Interior painting",
-      "Exterior painting",
-      "Touch-ups and repainting",
+      "Interior painting", "Exterior painting", "Touch-ups and repainting",
     ],
   },
   {
