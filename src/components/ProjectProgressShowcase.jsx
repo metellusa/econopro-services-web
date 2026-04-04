@@ -117,14 +117,15 @@ export default function ProjectProgressShowcase() {
           </p>
         </div>
 
-        <div className="mt-14 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+        {/* HORIZONTAL SCROLL */}
+        <div className="mt-14 flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory no-scrollbar">
           {projectSteps.map((step, index) => {
             const Icon = step.icon;
 
             return (
               <article
                 key={`${step.title}-${index}`}
-                className="group relative overflow-hidden rounded-[2rem] border border-slate-200 bg-brand-cream shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+                className="group relative min-w-[280px] max-w-[280px] flex-shrink-0 snap-start overflow-hidden rounded-[2rem] border border-slate-200 bg-brand-cream shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
               >
                 <button
                   type="button"
@@ -154,7 +155,7 @@ export default function ProjectProgressShowcase() {
                 </button>
 
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold text-brand-navy">
+                  <h3 className="text-base font-semibold text-brand-navy">
                     {step.title}
                   </h3>
                   <p className="mt-3 text-sm leading-7 text-slate-600">
@@ -177,32 +178,26 @@ export default function ProjectProgressShowcase() {
         </div>
       </div>
 
+      {/* MODAL */}
       {selectedStep ? (
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
           onClick={closeModal}
-          role="dialog"
-          aria-modal="true"
-          aria-label={selectedStep.title}
         >
           <div
             className="relative flex max-h-[95vh] w-full max-w-6xl items-center justify-center"
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              type="button"
               onClick={closeModal}
-              className="absolute right-2 top-2 z-20 rounded-full bg-white/90 p-2 text-brand-navy shadow-md transition hover:bg-white"
-              aria-label="Close image preview"
+              className="absolute right-2 top-2 z-20 rounded-full bg-white/90 p-2 text-brand-navy shadow-md hover:bg-white"
             >
               <X size={22} />
             </button>
 
             <button
-              type="button"
               onClick={showPrev}
-              className="absolute left-2 z-20 rounded-full bg-white/90 p-2 text-brand-navy shadow-md transition hover:bg-white"
-              aria-label="Previous image"
+              className="absolute left-2 z-20 rounded-full bg-white/90 p-2 text-brand-navy shadow-md hover:bg-white"
             >
               <ChevronLeft size={24} />
             </button>
@@ -214,22 +209,15 @@ export default function ProjectProgressShowcase() {
             />
 
             <button
-              type="button"
               onClick={showNext}
-              className="absolute right-2 z-20 rounded-full bg-white/90 p-2 text-brand-navy shadow-md transition hover:bg-white sm:right-16"
-              aria-label="Next image"
+              className="absolute right-2 z-20 rounded-full bg-white/90 p-2 text-brand-navy shadow-md hover:bg-white sm:right-16"
             >
               <ChevronRight size={24} />
             </button>
 
-            <div className="absolute bottom-4 left-1/2 w-[calc(100%-2rem)] -translate-x-1/2 rounded-2xl bg-black/65 px-5 py-4 text-white shadow-lg sm:w-auto sm:max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-gold">
-                {selectedStep.phase}
-              </p>
-              <h3 className="mt-1 text-lg font-semibold">{selectedStep.title}</h3>
-              <p className="mt-2 text-sm leading-6 text-slate-200">
-                {selectedStep.description}
-              </p>
+            {/* SIMPLE TITLE (no overlay blocking image) */}
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 rounded-full bg-black/70 px-5 py-2 text-sm font-semibold text-white backdrop-blur">
+              {selectedStep.title}
             </div>
           </div>
         </div>

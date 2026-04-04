@@ -7,9 +7,14 @@ const faqs = [
       "Customers can submit either the onsite estimate form or the cleaning service form. After submission, EconoPro Services reviews the request and follows up to confirm the final appointment details.",
   },
   {
+    question: "What is the typical process for large projects?",
+    answer:
+      "We start with a free on-site assessment to fully understand your needs. After that, we provide a clear, detailed quote for your review. Once approved, we schedule your project and begin work as planned. Throughout the process, we keep you informed every step of the way and communicate proactively if anything changes. When the work is complete, we conduct a final walkthrough with you to ensure everything meets your expectations.",
+  },
+  {
     question: "Do you offer payment flexibility?",
     answer:
-      "Yes. Flexible payment options are available, including monthly plans that can help make larger projects more manageable.",
+      "Yes. Flexible payment options are available through our partners, including monthly plans that can help make larger projects more manageable.",
   },
   {
     question: "What areas do you serve?",
@@ -24,7 +29,7 @@ const faqs = [
   {
     question: "When are you open?",
     answer:
-      "Our business hours are Monday through Friday, from 8:00 AM to 8:00 PM. Online requests can be submitted anytime.",
+      "Our business hours are Monday through Friday, from 8:00 AM to 8:00 PM, and Saturday from 8am to 5pm. Online requests can be submitted anytime.",
   },
   {
     question: "Do you provide onsite estimates?",

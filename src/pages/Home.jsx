@@ -170,6 +170,8 @@ export default function Home() {
                             <h3 className="mt-2 font-semibold">Hours</h3>
                             <p>Mon - Fri</p>
                             <p className="font-semibold">8am - 8pm</p>
+                            <p>Sat</p>
+                            <p className="font-semibold">8am - 5pm</p>
                         </div>
                     </div>
                 </div>

@@ -38,7 +38,7 @@ export default function FinancingOptions() {
 
             <p className="mt-4 text-lg leading-8 text-slate-600">
               Whether you’re planning flooring installation, painting, drywall
-              work, cleaning, or other property improvements, financing may help
+              work, or other property improvements, financing may help
               you move forward without delaying the work you need.
             </p>
           </div>

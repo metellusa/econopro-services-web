@@ -167,7 +167,7 @@ export default function Bookings() {
                   </Input>
                   <Input
                     label="Preferred Time Window"
-                    hint="Business hours: Monday to Friday, 8am to 8pm"
+                    hint="Business hours: Monday to Friday, 8am to 8pm. Saturday, 8am to 5pm"
                   >
                     <select
                       required
