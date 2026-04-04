@@ -44,17 +44,17 @@ const servicesPreview = [
 const testimonials = [
     {
         quote:
-            "Professional, responsive, and easy to work with. The communication was clear from start to finish.",
-        name: "Local Homeowner",
+            "I had my living room and dining room walls painted recently, and I’m so happy with how everything turned out! The team was super professional and showed up right on time.",
+        name: "Clement Beauvais",
     },
     {
         quote:
-            "They showed up ready to work, kept the space clean, and made the whole project feel stress-free.",
-        name: "Property Client",
+            "Did everything that was asked and did it well. Will be using them on a regular basis. Thanks again for a great job.",
+        name: "Douglas Lanier",
     },
     {
-        quote: "A great choice when you want quality work without the runaround.",
-        name: "Residential Customer",
+        quote: "Excellent service! Very professional, quick and reasonable price.",
+        name: "Mary Valero",
     },
 ];
 
@@ -135,7 +135,7 @@ export default function Home() {
                     <div>
                         <SectionHeading
                             title="Why Choose EconoPro"
-                            description="A smooth, professional experience from start to finish."
+                            description="A smooth, professional experience from start to finish. Check out these Google reviews!"
                         />
 
                         <div className="mt-6 space-y-4">
