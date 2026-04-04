@@ -76,6 +76,8 @@ export default function Contact() {
                   <p className="font-semibold text-white">Business Hours</p>
                   <p className="text-slate-300">Monday - Friday</p>
                   <p className="text-slate-300">8:00 AM - 8:00 PM</p>
+                  <p className="text-slate-300">Saturday</p>
+                  <p className="text-slate-300">8:00 AM - 5:00 PM</p>
                 </div>
               </div>
             </div>
