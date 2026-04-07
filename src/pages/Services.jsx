@@ -48,17 +48,6 @@ const services = [
     ],
   },
   {
-    icon: LightbulbIcon,
-    title: "Light Fixture / Fan Installation",
-    description:
-      "Installation of light fixtures done right and at unbeatable prices",
-    bullets: [
-      "Indoors",
-      "Outdoors",
-      "Patio areas",
-    ],
-  },
-  {
     icon: HandHelping,
     title: "General Property Maintenance",
     description:

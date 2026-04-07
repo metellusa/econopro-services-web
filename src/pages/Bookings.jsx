@@ -200,11 +200,11 @@ export default function Bookings() {
                     </option>
                     <option>Flooring Installation</option>
                     <option>Flooring Repair</option>
-                    <option>Drywall Services</option>
+                    <option>Drywall Installation</option>
+                    <option>Drywall Repair</option>
                     <option>Interior Painting</option>
                     <option>Exterior Painting</option>
                     <option>Property Maintenance</option>
-                    <option>Fixture Installation</option>
                     <option>Other</option>
                   </select>
                 </Input>
