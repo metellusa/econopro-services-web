@@ -125,6 +125,7 @@ export default function Services() {
                 Our goal is simple: deliver clean, professional results with clear
                 communication and no surprises. We treat every home like it’s our
                 own and take pride in getting the job done right the first time.
+                That's why both homeowners and home flippers alike work with us!
               </p>
               <p>
                 Flexible payment options are also available, including convenient
