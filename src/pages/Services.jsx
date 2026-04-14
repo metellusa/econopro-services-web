@@ -6,7 +6,7 @@ import {
   PaintBucket,
   Sparkles,
   ChevronRight,
-  LightbulbIcon,
+  Sofa,
 } from "lucide-react";
 
 import SectionHeading from "../components/SectionHeading";
@@ -56,6 +56,17 @@ const services = [
       "Minor repairs",
       "Punch-list items",
       "Ongoing upkeep support",
+    ],
+  },
+  {
+    icon: Sofa,
+    title: "Interior Design Services",
+    description:
+      "Home styling and color guidance to help you plan your space with confidence.",
+    bullets: [
+      "In-home consultation",
+      "Design mockups",
+      "Color & décor recommendations",
     ],
   },
   {
@@ -125,7 +136,7 @@ export default function Services() {
                 Our goal is simple: deliver clean, professional results with clear
                 communication and no surprises. We treat every home like it’s our
                 own and take pride in getting the job done right the first time.
-                That's why both homeowners and home flippers alike work with us!
+                That's why both homeowners and home flippers alike work with us.
               </p>
               <p>
                 Flexible payment options are also available, including convenient
