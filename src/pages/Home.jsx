@@ -63,13 +63,32 @@ export default function Home() {
         <main>
             {/* HERO */}
             <section className="bg-hero-glow py-20">
-                <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                    <div className="max-w-3xl">
+                <div className="mx-auto max-w-7xl px-6 lg:px-8 relative">
+                    {/* TOP ROW */}
+                    <div className="flex items-start justify-between">
+                        {/* LEFT: Location Badge */}
                         <div className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm shadow">
                             <ShieldCheck size={16} />
                             Serving Orlando & Tampa
                         </div>
 
+                        {/* RIGHT: BBB Badge */}
+                        <a
+                            href="https://www.bbb.org/us/fl/orlando/profile/handyman/econopro-services-llc-0733-235980930/#sealclick"
+                            target="_blank"
+                            rel="nofollow noreferrer"
+                        >
+                            <img
+                                src="https://seal-centralflorida.bbb.org/logo/ruhzbal/bbb-235980930.png"
+                                alt="BBB Accredited Business"
+                                className="h-16 md:h-20 hover:scale-105 transition-transform duration-200"
+                                style={{ border: 0 }}
+                            />
+                        </a>
+                    </div>
+
+                    {/* HERO CONTENT */}
+                    <div className="max-w-3xl">
                         <h1 className="mt-6 text-5xl font-bold text-brand-navy">
                             Affordable Quality. Dependable Service.
                         </h1>
