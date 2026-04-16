@@ -65,24 +65,28 @@ export default function Home() {
             <section className="bg-hero-glow py-20">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8 relative">
                     {/* TOP ROW */}
-                    <div className="flex items-start justify-between">
-                        {/* LEFT: Location Badge */}
-                        <div className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm shadow">
-                            <ShieldCheck size={16} />
-                            Serving Orlando & Tampa
-                        </div>
+                    <div className="mt-2 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                        {/* Mobile: BBB on top, then serving badge */}
+                        {/* Desktop: serving badge left, BBB right */}
+                        <div className="flex flex-col gap-3 md:contents">
+                            <a
+                                href="https://www.bbb.org/us/fl/orlando/profile/handyman/econopro-services-llc-0733-235980930/#sealclick"
+                                target="_blank"
+                                rel="nofollow noreferrer"
+                                className="md:order-2"
+                            >
+                                <img
+                                    src="https://seal-centralflorida.bbb.org/seals/black-seal-250-52-bbb-235980930.png"
+                                    alt="BBB Accredited Business"
+                                    className="h-12 w-auto sm:h-14 md:h-auto"
+                                />
+                            </a>
 
-                        {/* RIGHT: BBB Badge */}
-                        <a
-                            href="https://www.bbb.org/us/fl/orlando/profile/handyman/econopro-services-llc-0733-235980930/#sealclick"
-                            target="_blank"
-                            rel="nofollow noreferrer"
-                        >
-                            <img
-                                src="https://seal-centralflorida.bbb.org/seals/black-seal-250-52-bbb-235980930.png"
-                                alt="BBB Accredited Business"
-                            />
-                        </a>
+                            <div className="inline-flex w-fit items-center gap-2 rounded-full bg-white px-4 py-2 text-sm shadow md:order-1">
+                                <ShieldCheck size={16} />
+                                Serving Orlando & Tampa
+                            </div>
+                        </div>
                     </div>
 
                     {/* HERO CONTENT */}
