@@ -79,10 +79,8 @@ export default function Home() {
                             rel="nofollow noreferrer"
                         >
                             <img
-                                src="https://seal-centralflorida.bbb.org/logo/ruhzbal/bbb-235980930.png"
+                                src="https://seal-centralflorida.bbb.org/seals/black-seal-250-52-bbb-235980930.png"
                                 alt="BBB Accredited Business"
-                                className="h-16 md:h-20 hover:scale-105 transition-transform duration-200"
-                                style={{ border: 0 }}
                             />
                         </a>
                     </div>
