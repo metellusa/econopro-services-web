@@ -7,6 +7,7 @@ import { fieldClassName } from "../../components/ui/FormControls";
 import { StatusBadge } from "../../components/portal/ProjectBadges";
 import ProjectPhasesPanel from "../../components/portal/ProjectPhasesPanel";
 import GuestLinkManager from "../../components/portal/GuestLinkManager";
+import ProjectDocumentsPanel from "../../components/portal/ProjectDocumentsPanel";
 import { getProject, updateProject, uploadProjectFile } from "../../lib/projectApi";
 import { projectStatusLabel } from "../../lib/projects";
 
@@ -16,6 +17,7 @@ const TABS = [
   "Team",
   "Client",
   "Guest Access",
+  "Documents",
   "Files",
   "Notes",
   "Activity",
@@ -254,6 +256,10 @@ export default function AdminProjectDetail() {
               clientId={project.client_id}
               projectId={project.id}
             />
+          ) : null}
+
+          {tab === "Documents" ? (
+            <ProjectDocumentsPanel projectId={project.id} />
           ) : null}
 
           {tab === "Files" ? (

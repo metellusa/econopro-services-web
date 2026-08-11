@@ -11,6 +11,7 @@ import {
   updateIssueStatus,
 } from "../../lib/contractorApi";
 import { processQueuedNotifications } from "../../lib/notifications/service";
+import { convertIssueToChangeOrder } from "../../lib/changeOrderApi";
 
 export default function AdminReviews() {
   const [updates, setUpdates] = useState([]);
@@ -120,6 +121,17 @@ export default function AdminReviews() {
                           }}
                         >
                           Acknowledge
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={async () => {
+                            await convertIssueToChangeOrder(issue);
+                            await reload();
+                          }}
+                        >
+                          To change order
                         </Button>
                         <Button
                           type="button"

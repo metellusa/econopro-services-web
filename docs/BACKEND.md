@@ -145,6 +145,15 @@ Apply `supabase/migrations/20260811210000_phase6_notifications.sql`.
 - Dev mode uses console adapters (`VITE_NOTIFICATIONS_MODE=development`)
 - Production sends via `netlify/functions/send-notification.js` (Resend + Twilio env vars)
 
+## Phase 7: Documents & change orders
+
+Apply `supabase/migrations/20260811220000_phase7_documents_change_orders.sql`.
+
+- Project **Documents** tab: upload visibility-scoped docs + draft/publish change orders
+- Guest approvals require optional verification code for sensitive actions
+- Registered/guest clients approve/decline in portal / guest link
+- Issues can convert to change-order drafts from `/admin/reviews`
+
 ## Production build
 
 ```bash

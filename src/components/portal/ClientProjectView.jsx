@@ -2,11 +2,13 @@ import { Link } from "react-router-dom";
 import { COMPANY } from "../../data/site";
 import { projectStatusLabel } from "../../lib/projects";
 import { phaseStatusLabel } from "../../lib/phases";
+import ClientApprovalsPanel from "./ClientApprovalsPanel";
 
 export default function ClientProjectView({
   project,
   clientName,
   mode = "client",
+  guestToken = null,
   upgradeSlot = null,
 }) {
   if (!project) {
@@ -124,6 +126,8 @@ export default function ClientProjectView({
           </ul>
         </section>
       ) : null}
+
+      <ClientApprovalsPanel projectId={project.id} guestToken={guestToken} />
 
       <section className="rounded-2xl border border-brand-border bg-white p-5 shadow-card">
         <h2 className="font-display text-xl text-brand-navy">Contact EconoPro</h2>

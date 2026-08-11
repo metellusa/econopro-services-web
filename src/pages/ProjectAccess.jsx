@@ -90,6 +90,7 @@ export default function ProjectAccess() {
             project={payload.project}
             clientName={payload.client_name}
             mode="guest"
+            guestToken={token}
           />
         ) : null}
       </Container>
