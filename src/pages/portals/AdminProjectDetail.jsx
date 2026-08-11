@@ -5,11 +5,13 @@ import Section from "../../components/ui/Section";
 import Button from "../../components/ui/Button";
 import { fieldClassName } from "../../components/ui/FormControls";
 import { StatusBadge } from "../../components/portal/ProjectBadges";
+import ProjectPhasesPanel from "../../components/portal/ProjectPhasesPanel";
 import { getProject, updateProject, uploadProjectFile } from "../../lib/projectApi";
 import { projectStatusLabel } from "../../lib/projects";
 
 const TABS = [
   "Overview",
+  "Phases",
   "Team",
   "Client",
   "Files",
@@ -141,6 +143,9 @@ export default function AdminProjectDetail() {
                 {project.title}
               </h1>
               <StatusBadge status={project.status} />
+              <span className="rounded-full bg-brand-cream px-3 py-1 text-xs font-semibold text-brand-navy">
+                {project.progress_percent ?? 0}% complete
+              </span>
             </div>
             <p className="mt-2 text-sm text-brand-muted">
               {project.service_type} · {project.property_address}
@@ -181,15 +186,13 @@ export default function AdminProjectDetail() {
               {item}
             </button>
           ))}
-          <span className="ml-auto hidden items-center px-3 text-xs text-slate-400 sm:inline-flex">
-            Phases / tasks coming in Phase 3
-          </span>
         </div>
 
         <div className="mt-6 rounded-section border border-brand-border bg-white p-6 shadow-card">
           {tab === "Overview" ? (
             <div className="grid gap-6 lg:grid-cols-2">
               <Field label="Status" value={projectStatusLabel(project.status)} />
+              <Field label="Progress" value={`${project.progress_percent ?? 0}%`} />
               <Field label="Service type" value={project.service_type} />
               <Field label="Start date" value={project.start_date || "—"} />
               <Field
@@ -211,6 +214,13 @@ export default function AdminProjectDetail() {
                 />
               </div>
             </div>
+          ) : null}
+
+          {tab === "Phases" ? (
+            <ProjectPhasesPanel
+              projectId={project.id}
+              projectProgress={project.progress_percent ?? 0}
+            />
           ) : null}
 
           {tab === "Team" ? (

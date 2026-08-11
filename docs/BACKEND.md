@@ -106,6 +106,16 @@ Data notes:
 - Files support `internal` vs `client` visibility.
 - Activity is written automatically on create/update/assignment changes.
 
+## Phase 3: Phases, tasks, templates
+
+Apply `supabase/migrations/20260811180000_phase3_phases_templates.sql`.
+
+- `/admin/templates` create/activate reusable phase templates by service
+- Project detail → **Phases** tab: apply template, reorder, assign contractors, tasks, completion override
+- Progress is calculated from phase/task completion unless `progress_manual_override` is set
+- `client_visible` flags keep internal phases/tasks out of client policies
+- Staff override of required-task completion is audited via `staff_override` activity
+
 ## Production build
 
 ```bash

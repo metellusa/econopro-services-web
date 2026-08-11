@@ -25,6 +25,7 @@ import AdminHome from "./pages/portals/AdminHome";
 import AdminProjects from "./pages/portals/AdminProjects";
 import AdminProjectForm from "./pages/portals/AdminProjectForm";
 import AdminProjectDetail from "./pages/portals/AdminProjectDetail";
+import AdminTemplates from "./pages/portals/AdminTemplates";
 import ContractorHome from "./pages/portals/ContractorHome";
 import ClientHome from "./pages/portals/ClientHome";
 import { APP_ROLES, STAFF_ROLES } from "./lib/roles";
@@ -41,6 +42,7 @@ function MarketingLayout() {
 const adminNav = [
   { to: "/admin", label: "Overview", end: true },
   { to: "/admin/projects", label: "Projects" },
+  { to: "/admin/templates", label: "Templates" },
 ];
 
 export default function App() {
@@ -86,6 +88,7 @@ export default function App() {
         <Route path="projects/new" element={<AdminProjectForm />} />
         <Route path="projects/:projectId" element={<AdminProjectDetail />} />
         <Route path="projects/:projectId/edit" element={<AdminProjectForm />} />
+        <Route path="templates" element={<AdminTemplates />} />
       </Route>
 
       <Route
