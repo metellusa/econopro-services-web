@@ -1,158 +1,93 @@
-# Backend & Operations Portals
+# EconoPro Backend & Operations
 
-EconoPro’s marketing site remains a Vite + React SPA on Netlify. Project tracking uses **Supabase** (Postgres + Auth + Storage + Row Level Security) so authorization is enforced in the database, not only in the UI.
+## Architecture
 
-## What Phase 1 provides
+- **Marketing site:** Vite + React SPA (Netlify)
+- **Operations layer:** Same SPA + **Supabase** (Auth, Postgres, RLS, Storage)
+- **Notifications:** Queue in Postgres + Netlify Function adapters (Resend email, Twilio SMS)
+- **Dev safety:** `VITE_NOTIFICATIONS_MODE=development` logs only (no live customer messages)
 
-- Secure auth for `admin`, `staff`, `contractor`, and `client` roles
-- `clients` records that can exist **without** a user account (guest clients)
-- Optional link from a client record to a registered user (`link_client_to_user`)
-- Hashed, revocable guest access tokens (`/project-access/<token>`)
-- Protected portal shells: `/admin`, `/contractor`, `/client`
-- Storage bucket `project-files` (private; staff policies)
+Public marketing routes stay unchanged. Portal routes are separate shells under `/admin`, `/contractor`, `/client`, plus `/project-access/:token`.
 
-## Environment variables
+## Roles
 
-Copy `.env.example` to `.env.local` (or `.env`) and fill in real values:
+| Role | Portal | Capabilities |
+| --- | --- | --- |
+| admin / staff | `/admin` | Projects, templates, reviews, notifications, clients, guest links, publish updates |
+| contractor | `/contractor` | Assigned jobs, tasks, progress drafts, issues, photos |
+| client | `/client` | Own projects, published updates, approvals |
+| guest | `/project-access/:token` | Token-scoped client-facing project view (no account) |
 
-| Variable | Purpose |
-| --- | --- |
-| `VITE_SUPABASE_URL` | Supabase project URL |
-| `VITE_SUPABASE_ANON_KEY` | Supabase anon/public key (safe for browser; RLS still applies) |
-| `VITE_APP_URL` | App origin used for password-reset redirects |
-| `SUPABASE_SERVICE_ROLE_KEY` | **Server/scripts only.** Never put this in Vite `VITE_*` vars. |
+Authorization is enforced with **Supabase RLS** and security-definer RPCs. UI route guards are convenience only.
 
-Without Supabase env vars, the public marketing site still builds and runs. Portal routes show a clear “not configured” message.
+## Migrations
+
+Apply in order from `supabase/migrations/`:
+
+1. Phase 1 auth/clients/guest tokens
+2. Phase 2 projects
+3. Phase 3 phases/templates
+4. Phase 4 contractor progress/issues
+5. Phase 5 client/guest payloads
+6. Phase 6 notifications
+7. Phase 7 documents/change orders
+
+```bash
+npx supabase db push
+# or paste each SQL file into the Supabase SQL editor
+```
+
+## Environment
+
+See `.env.example`.
+
+Client (Vite):
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_ANON_KEY`
+- `VITE_APP_URL`
+- `VITE_NOTIFICATIONS_MODE`
+
+Netlify function only:
+- `NOTIFICATIONS_MODE`
+- `RESEND_API_KEY`
+- `NOTIFICATION_FROM_EMAIL`
+- `TWILIO_ACCOUNT_SID`
+- `TWILIO_AUTH_TOKEN`
+- `TWILIO_FROM_NUMBER`
+
+Never commit real secrets. Never put service-role keys in `VITE_*`.
+
+## Core workflows
+
+1. Staff create guest/registered client + project
+2. Apply phase template / assign contractors
+3. Contractor submits progress (internal + proposed client text)
+4. Staff reviews/publishes → notifications queued
+5. Guest opens secure link or registered client uses `/client`
+6. Change orders published for approval (guest may need verification code)
+
+## Security checklist
+
+- [x] Role checks on portal routes
+- [x] RLS on projects, notes, files, updates, documents, change orders
+- [x] Internal notes in staff-only tables
+- [x] Guest tokens hashed, revocable, optional expiry
+- [x] Public guest URLs use opaque tokens (not DB ids)
+- [x] Contractor submit does not notify clients
+- [x] Notification failures do not roll back publish
+- [x] Upload size/type validation for contractor photos
+- [x] Destinations masked in notification UI logs
+- [ ] Configure production provider credentials in Netlify
+- [ ] Disable open public signup for staff/contractor roles in Supabase Auth
+- [ ] Add rate limiting / WAF at Netlify edge if abuse appears
 
 ## Local development
 
 ```bash
 npm install
 cp .env.example .env.local
-# fill Supabase values
 npm run dev
 ```
-
-Marketing site: `http://localhost:5173`  
-Sign in: `http://localhost:5173/sign-in`
-
-## Database migrations
-
-Migrations live in `supabase/migrations/`.
-
-### Option A: Supabase CLI
-
-```bash
-npx supabase login
-npx supabase link --project-ref YOUR_PROJECT_REF
-npx supabase db push
-```
-
-### Option B: SQL editor
-
-1. Open the Supabase SQL editor.
-2. Paste and run `supabase/migrations/20260811160000_phase1_auth_guest_clients.sql`.
-
-## Auth setup checklist
-
-1. Create a Supabase project.
-2. Enable Email auth (and disable open public sign-ups in production if invites-only).
-3. Apply the Phase 1 migration.
-4. Create the first admin user in Authentication, then set `profiles.role = 'admin'` in the Table Editor (or via SQL).
-5. Add `http://localhost:5173/update-password` and your production `/update-password` URL under Auth → URL configuration → Redirect URLs.
-6. Set Site URL to your production domain (and local URL for development).
-
-### Invitation flow (foundation)
-
-- `invitations` table stores hashed invite tokens, role, optional `client_id`, and expiry.
-- Staff create invites; acceptance UI/API expands in later phases.
-- Prefer inviting users rather than open registration for staff/contractors.
-
-### Guest access
-
-Staff call RPC `create_guest_access_token(client_id, project_ids, label, expires_at)` which returns the plaintext token **once**. Only the SHA-256 hash is stored.
-
-- Public path: `/project-access/<token>`
-- Validate via RPC `validate_guest_access(raw_token)`
-- Revoke via RPC `revoke_guest_access_token(token_id)`
-
-Guest/client-facing queries must never expose `clients.internal_notes` or contractor-only fields (enforced later with views/policies as project tables land).
-
-## Authorization model
-
-| Actor | Access |
-| --- | --- |
-| Admin / Staff | Company client + token management (RLS `is_staff()`) |
-| Contractor | Own profile; project assignment policies arrive in later phases |
-| Registered client | Own linked `clients` row only |
-| Guest token | Only through `validate_guest_access`; scoped project IDs |
-
-Frontend `ProtectedRoute` checks roles for UX, but **RLS is the source of truth**.
-
-## Phase 2: Project management
-
-Apply `supabase/migrations/20260811170000_phase2_project_management.sql` after Phase 1.
-
-Staff routes:
-- `/admin/projects` dashboard (search + filters)
-- `/admin/projects/new` create project / guest client
-- `/admin/projects/:id` detail tabs (Overview, Team, Client, Files, Notes, Activity)
-- `/admin/projects/:id/edit`
-
-Data notes:
-- `projects.client_summary` is client-safe.
-- `project_internal_notes` is a separate staff-only table (never exposed to clients/guests).
-- Assignments live in `project_assignees`.
-- Files support `internal` vs `client` visibility.
-- Activity is written automatically on create/update/assignment changes.
-
-## Phase 3: Phases, tasks, templates
-
-Apply `supabase/migrations/20260811180000_phase3_phases_templates.sql`.
-
-- `/admin/templates` create/activate reusable phase templates by service
-- Project detail → **Phases** tab: apply template, reorder, assign contractors, tasks, completion override
-- Progress is calculated from phase/task completion unless `progress_manual_override` is set
-- `client_visible` flags keep internal phases/tasks out of client policies
-- Staff override of required-task completion is audited via `staff_override` activity
-
-## Phase 4: Contractor portal
-
-Apply `supabase/migrations/20260811190000_phase4_contractor_progress.sql`.
-
-- `/contractor` mobile-first job list
-- `/contractor/projects/:id` tasks, progress submission, issue reporting, camera upload
-- Progress updates keep **internal_note** and **proposed_client_update** separate
-- `/admin/reviews` staff approve/reject/publish queue + open issues
-- Photos: 8MB max, image types only; storage policies allow assigned contractors
-
-## Phase 5: Client + guest access
-
-Apply `supabase/migrations/20260811200000_phase5_client_guest_access.sql`.
-
-- `/client` and `/client/projects/:id` for registered clients (RLS + client-safe RPC)
-- `/project-access/:token` full guest project UI (no login; hashed token only)
-- Admin project → **Guest Access** tab: generate/copy/revoke links
-- Guest→registered upgrade uses same `clients` row via `link_client_to_user`
-
-## Phase 6: Notifications
-
-Apply `supabase/migrations/20260811210000_phase6_notifications.sql`.
-
-- Central `enqueue_client_notifications` respects email/SMS prefs (guests included)
-- Publishing a progress update queues email/SMS; contractor submit does not
-- `/admin/notifications` log with retry + process queued
-- Dev mode uses console adapters (`VITE_NOTIFICATIONS_MODE=development`)
-- Production sends via `netlify/functions/send-notification.js` (Resend + Twilio env vars)
-
-## Phase 7: Documents & change orders
-
-Apply `supabase/migrations/20260811220000_phase7_documents_change_orders.sql`.
-
-- Project **Documents** tab: upload visibility-scoped docs + draft/publish change orders
-- Guest approvals require optional verification code for sensitive actions
-- Registered/guest clients approve/decline in portal / guest link
-- Issues can convert to change-order drafts from `/admin/reviews`
 
 ## Production build
 
@@ -160,4 +95,4 @@ Apply `supabase/migrations/20260811220000_phase7_documents_change_orders.sql`.
 npm run build
 ```
 
-Deploy remains Netlify (`netlify.toml`). Add the same `VITE_*` variables in the Netlify UI for production builds.
+Deploy with Netlify (`netlify.toml`). Configure the same `VITE_*` vars for build, and function secrets for live messaging.

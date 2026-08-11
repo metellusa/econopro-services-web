@@ -27,6 +27,7 @@ import AdminProjectForm from "./pages/portals/AdminProjectForm";
 import AdminProjectDetail from "./pages/portals/AdminProjectDetail";
 import AdminTemplates from "./pages/portals/AdminTemplates";
 import AdminReviews from "./pages/portals/AdminReviews";
+import AdminClients from "./pages/portals/AdminClients";
 import AdminNotifications from "./pages/portals/AdminNotifications";
 import ContractorHome from "./pages/portals/ContractorHome";
 import ContractorProjectDetail from "./pages/portals/ContractorProjectDetail";
@@ -46,6 +47,7 @@ function MarketingLayout() {
 const adminNav = [
   { to: "/admin", label: "Overview", end: true },
   { to: "/admin/projects", label: "Projects" },
+  { to: "/admin/clients", label: "Clients" },
   { to: "/admin/reviews", label: "Reviews" },
   { to: "/admin/notifications", label: "Notifications" },
   { to: "/admin/templates", label: "Templates" },
@@ -94,6 +96,7 @@ export default function App() {
         <Route path="projects/new" element={<AdminProjectForm />} />
         <Route path="projects/:projectId" element={<AdminProjectDetail />} />
         <Route path="projects/:projectId/edit" element={<AdminProjectForm />} />
+        <Route path="clients" element={<AdminClients />} />
         <Route path="templates" element={<AdminTemplates />} />
         <Route path="reviews" element={<AdminReviews />} />
         <Route path="notifications" element={<AdminNotifications />} />
