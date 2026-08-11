@@ -164,10 +164,13 @@ export default function ProjectProgressShowcase() {
           })}
         </div>
 
-        <div className="mt-10 flex justify-center">
-          <Button to="/projects" variant="primary" size="lg">
-            View More Projects
+        <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <Button to="/projects/kitchen-renovation" variant="primary" size="lg">
+            View Full Project
             <ArrowRight size={18} aria-hidden="true" />
+          </Button>
+          <Button to="/projects" variant="outline-light" size="lg">
+            View More Projects
           </Button>
         </div>
       </Container>

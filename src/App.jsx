@@ -4,7 +4,8 @@ import Home from "./pages/Home";
 import Services from "./pages/Services";
 import ServiceDetail from "./pages/ServiceDetail";
 import Bookings from "./pages/Bookings";
-import Gallery from "./pages/Gallery";
+import Projects from "./pages/Projects";
+import ProjectDetail from "./pages/ProjectDetail";
 import Faq from "./pages/Faq";
 import FinancingOptions from "./pages/FinancingOptions";
 import Contact from "./pages/Contact";
@@ -21,8 +22,9 @@ export default function App() {
         <Route path="/services/:slug" element={<ServiceDetail />} />
         <Route path="/bookings" element={<Bookings />} />
         <Route path="/financing-options" element={<FinancingOptions />} />
-        <Route path="/gallery" element={<Gallery />} />
-        <Route path="/projects" element={<Navigate to="/gallery" replace />} />
+        <Route path="/projects" element={<Projects />} />
+        <Route path="/projects/:slug" element={<ProjectDetail />} />
+        <Route path="/gallery" element={<Navigate to="/projects" replace />} />
         <Route path="/about" element={<About />} />
         <Route path="/reviews" element={<Reviews />} />
         <Route path="/faq" element={<Faq />} />
