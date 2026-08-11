@@ -1,6 +1,13 @@
-import { CalendarDays, Sparkles } from "lucide-react";
-import SectionHeading from "../components/SectionHeading";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ArrowLeft, CalendarDays, Sparkles } from "lucide-react";
+
+import Button from "../components/ui/Button";
+import Container from "../components/ui/Container";
+import Section from "../components/ui/Section";
+import SectionEyebrow from "../components/ui/SectionEyebrow";
+import { FormField, fieldClassName } from "../components/ui/FormControls";
+import { COMPANY } from "../data/site";
 
 const cleaningOptions = [
   "Standard Cleaning",
@@ -8,92 +15,158 @@ const cleaningOptions = [
   "Move-Out Cleaning",
 ];
 
-function Input({ label, children, hint }) {
-  return (
-    <label className="block">
-      <span className="mb-2 block text-sm font-semibold text-brand-navy">
-        {label}
-      </span>
-      {children}
-      {hint ? (
-        <span className="mt-2 block text-xs text-slate-500">{hint}</span>
-      ) : null}
-    </label>
-  );
-}
+const projectTypes = [
+  "Flooring Installation",
+  "Flooring Repair",
+  "Drywall Installation",
+  "Drywall Repair",
+  "Interior Painting",
+  "Exterior Painting",
+  "Interior Design",
+  "Property Maintenance",
+  "Other",
+];
 
-function baseFieldClass() {
-  return "w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-brand-gold focus:ring-4 focus:ring-brand-gold/10";
-}
+const timeWindows = [
+  "8:00 AM - 10:00 AM",
+  "10:00 AM - 12:00 PM",
+  "12:00 PM - 2:00 PM",
+  "2:00 PM - 4:00 PM",
+  "4:00 PM - 6:00 PM",
+  "6:00 PM - 8:00 PM",
+];
+
+// TODO: Optional project photo upload skipped for now.
+// Netlify Forms file uploads need multipart handling and careful production testing.
+// Revisit once a reliable upload path is confirmed.
 
 export default function Bookings() {
   const navigate = useNavigate();
+  const [flow, setFlow] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setError("");
+    setSubmitting(true);
 
-    const form = e.target;
+    const form = event.target;
     const formData = new FormData(form);
 
     try {
-      await fetch("/", {
+      const response = await fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams(formData).toString(),
       });
 
+      if (!response.ok) {
+        throw new Error("Form submission failed");
+      }
+
       navigate("/thank-you");
-    } catch (error) {
-      alert("Something went wrong. Please try again.");
+    } catch {
+      setError(
+        "Something went wrong submitting your request. Please try again or call us."
+      );
+      setSubmitting(false);
     }
   }
 
   return (
     <main>
-      <section className="bg-hero-glow py-20">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <Section tone="cream" className="bg-hero-glow">
+        <Container>
           <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-gold">
-              Online Booking
-            </p>
-            <h1 className="mt-4 text-5xl font-bold tracking-tight text-brand-navy sm:text-6xl">
-              Request an onsite estimate or schedule a cleaning service
+            <SectionEyebrow>Request Service</SectionEyebrow>
+            <h1 className="mt-4 font-display text-display-xl text-brand-navy text-balance">
+              How can we help you today?
             </h1>
-            <p className="mt-6 text-lg leading-8 text-slate-600">
-              Use the forms below to send your request online. We’ll review your
-              submission and follow up to confirm the appointment details.
+            <p className="mt-6 max-w-2xl text-base leading-7 text-brand-muted sm:text-lg sm:leading-8">
+              Submit a request online and we’ll follow up to confirm the details.
+              This is a request — not an instant confirmed booking.
             </p>
-            <p className="mt-4 text-lg leading-8 text-slate-600">
-              Business hours are Monday through Friday, from 8:00 AM to 8:00 PM.
+            <p className="mt-4 text-sm text-brand-muted">
+              Hours: {COMPANY.hours.weekdays}. {COMPANY.hours.saturday}.
             </p>
+            <a
+              href={`tel:${COMPANY.phoneTel}`}
+              className="mt-4 inline-flex text-sm font-semibold text-brand-navy hover:text-brand-gold"
+            >
+              Prefer to talk? Call {COMPANY.phoneDisplay}
+            </a>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
-      <section className="bg-white py-20">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <SectionHeading
-            eyebrow="Book Online"
-            title="Choose the type of appointment you need"
-            centered
-          />
+      <Section tone="white">
+        <Container className="max-w-4xl">
+          {!flow ? (
+            <div className="grid gap-6 md:grid-cols-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setFlow("estimate");
+                  setError("");
+                }}
+                className="rounded-section border border-brand-border bg-brand-cream p-8 text-left shadow-card transition hover:-translate-y-1 hover:shadow-soft"
+              >
+                <div className="inline-flex rounded-2xl bg-white p-3 text-brand-navy shadow-sm">
+                  <CalendarDays size={24} aria-hidden="true" />
+                </div>
+                <h2 className="mt-5 font-display text-2xl font-semibold text-brand-navy">
+                  Home Improvement & Repairs
+                </h2>
+                <p className="mt-3 text-sm leading-7 text-brand-muted">
+                  Flooring, drywall, painting, maintenance, and related projects.
+                </p>
+                <p className="mt-5 text-sm font-semibold text-brand-navy">
+                  Request an Estimate →
+                </p>
+              </button>
 
-          <div className="mt-14 grid gap-8 xl:grid-cols-2">
-            <div className="rounded-[2rem] border border-slate-200 bg-brand-cream p-8 shadow-soft">
-              <div className="flex items-center gap-3">
-                <div className="rounded-2xl bg-white p-3 text-brand-navy shadow-sm">
-                  <CalendarDays size={24} />
+              <button
+                type="button"
+                onClick={() => {
+                  setFlow("cleaning");
+                  setError("");
+                }}
+                className="rounded-section border border-brand-border bg-brand-navy p-8 text-left text-white shadow-soft transition hover:-translate-y-1"
+              >
+                <div className="inline-flex rounded-2xl bg-white/10 p-3 text-brand-gold">
+                  <Sparkles size={24} aria-hidden="true" />
                 </div>
-                <div>
-                  <h2 className="text-2xl font-semibold text-brand-navy">
-                    Book an Onsite Estimate
-                  </h2>
-                  <p className="text-sm text-slate-600">
-                    Ideal for flooring, drywall, painting, and general project
-                    estimates.
-                  </p>
-                </div>
-              </div>
+                <h2 className="mt-5 font-display text-2xl font-semibold">
+                  Cleaning Services
+                </h2>
+                <p className="mt-3 text-sm leading-7 text-slate-300">
+                  Standard, deep, and move-out cleaning.
+                </p>
+                <p className="mt-5 text-sm font-semibold text-brand-gold">
+                  Request Cleaning →
+                </p>
+              </button>
+            </div>
+          ) : null}
+
+          {flow === "estimate" ? (
+            <div className="rounded-section border border-brand-border bg-brand-cream p-6 shadow-card sm:p-8">
+              <button
+                type="button"
+                onClick={() => setFlow(null)}
+                className="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-navy hover:text-brand-gold"
+              >
+                <ArrowLeft size={16} aria-hidden="true" />
+                Back to options
+              </button>
+
+              <h2 className="font-display text-display-md text-brand-navy">
+                Request an Estimate
+              </h2>
+              <p className="mt-3 text-sm leading-7 text-brand-muted">
+                For flooring, drywall, painting, maintenance, and related projects.
+              </p>
 
               <form
                 name="onsite-estimate"
@@ -104,11 +177,7 @@ export default function Bookings() {
                 className="mt-8 space-y-5"
               >
                 <input type="hidden" name="form-name" value="onsite-estimate" />
-                <input
-                  type="hidden"
-                  name="serviceType"
-                  value="Onsite Estimate"
-                />
+                <input type="hidden" name="serviceType" value="Onsite Estimate" />
                 <p className="hidden">
                   <label>
                     Don’t fill this out if you’re human:{" "}
@@ -117,161 +186,95 @@ export default function Bookings() {
                 </p>
 
                 <div className="grid gap-5 sm:grid-cols-2">
-                  <Input label="Full Name">
-                    <input
-                      required
-                      name="fullName"
-                      className={baseFieldClass()}
-                      placeholder="Your full name"
-                    />
-                  </Input>
-                  <Input label="Phone Number">
-                    <input
-                      required
-                      name="phone"
-                      type="tel"
-                      className={baseFieldClass()}
-                      placeholder="(555) 555-5555"
-                    />
-                  </Input>
+                  <FormField label="Full Name" name="fullName" required placeholder="Your full name" />
+                  <FormField label="Phone Number" name="phone" type="tel" required placeholder="(555) 555-5555" />
                 </div>
 
-                <div className="grid gap-5 sm:grid-cols-2">
-                  <Input label="Email Address">
-                    <input
-                      required
-                      name="email"
-                      type="email"
-                      className={baseFieldClass()}
-                      placeholder="you@example.com"
-                    />
-                  </Input>
-                  <Input label="City / Area">
-                    <input
-                      required
-                      name="city"
-                      className={baseFieldClass()}
-                      placeholder="Orlando, Tampa, etc."
-                    />
-                  </Input>
-                </div>
+                <FormField label="Email Address" name="email" type="email" required placeholder="you@example.com" />
+
+                <FormField label="Project Type" name="projectType" as="select" required defaultValue="">
+                  <option value="" disabled>
+                    Select a project type
+                  </option>
+                  {projectTypes.map((type) => (
+                    <option key={type}>{type}</option>
+                  ))}
+                </FormField>
+
+                <FormField label="Project Address" name="address" required placeholder="Street address" />
 
                 <div className="grid gap-5 sm:grid-cols-2">
-                  <Input label="Preferred Date">
-                    <input
-                      required
-                      name="preferredDate"
-                      type="date"
-                      className={baseFieldClass()}
-                    />
-                  </Input>
-                  <Input
+                  <FormField label="Preferred Date" name="preferredDate" type="date" required />
+                  <FormField
                     label="Preferred Time Window"
-                    hint="Business hours: Monday to Friday, 8am to 8pm. Saturday, 8am to 5pm"
-                  >
-                    <select
-                      required
-                      name="preferredTime"
-                      className={baseFieldClass()}
-                      defaultValue=""
-                    >
-                      <option value="" disabled>
-                        Select a time window
-                      </option>
-                      <option>8:00 AM - 10:00 AM</option>
-                      <option>10:00 AM - 12:00 PM</option>
-                      <option>12:00 PM - 2:00 PM</option>
-                      <option>2:00 PM - 4:00 PM</option>
-                      <option>4:00 PM - 6:00 PM</option>
-                      <option>6:00 PM - 8:00 PM</option>
-                    </select>
-                  </Input>
-                </div>
-
-                <Input label="Project Type">
-                  <select
+                    name="preferredTime"
+                    as="select"
                     required
-                    name="projectType"
-                    className={baseFieldClass()}
                     defaultValue=""
+                    hint="Business hours: Mon–Fri 8am–8pm, Sat 8am–5pm"
                   >
                     <option value="" disabled>
-                      Select a project type
+                      Select a time window
                     </option>
-                    <option>Flooring Installation</option>
-                    <option>Flooring Repair</option>
-                    <option>Drywall Installation</option>
-                    <option>Drywall Repair</option>
-                    <option>Interior Painting</option>
-                    <option>Exterior Painting</option>
-                    <option>Interior Design</option>
-                    <option>Property Maintenance</option>
-                    <option>Other</option>
-                  </select>
-                </Input>
+                    {timeWindows.map((window) => (
+                      <option key={window}>{window}</option>
+                    ))}
+                  </FormField>
+                </div>
 
-                <Input label="Project Address">
-                  <input
-                    required
-                    name="address"
-                    className={baseFieldClass()}
-                    placeholder="Street address"
-                  />
-                </Input>
+                <FormField
+                  label="Project Details"
+                  name="projectDetails"
+                  as="textarea"
+                  required
+                  rows="5"
+                  placeholder="Tell us about the scope, rooms, timeline, or anything else we should know."
+                />
 
-                <Input label="Project Details">
-                  <textarea
-                    required
-                    name="projectDetails"
-                    rows="5"
-                    className={baseFieldClass()}
-                    placeholder="Tell us about the scope, size, timeline, or anything else we should know."
-                  />
-                </Input>
+                {error ? (
+                  <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">
+                    {error}{" "}
+                    <a href={`tel:${COMPANY.phoneTel}`} className="font-semibold underline">
+                      {COMPANY.phoneDisplay}
+                    </a>
+                  </div>
+                ) : null}
 
-                <button
-                  type="submit"
-                  className="inline-flex w-full items-center justify-center rounded-2xl bg-brand-navy px-6 py-4 text-sm font-semibold text-white transition hover:-translate-y-0.5"
-                >
-                  Submit Estimate Request
-                </button>
+                <Button type="submit" variant="secondary" size="lg" className="w-full" disabled={submitting}>
+                  {submitting ? "Submitting…" : "Submit Estimate Request"}
+                </Button>
               </form>
             </div>
+          ) : null}
 
-            <div className="rounded-[2rem] border border-slate-200 bg-brand-navy p-8 text-white shadow-soft">
-              <div className="flex items-center gap-3">
-                <div className="rounded-2xl bg-white/10 p-3 text-brand-gold">
-                  <Sparkles size={24} />
-                </div>
-                <div>
-                  <h2 className="text-2xl font-semibold">
-                    Schedule a Cleaning Service
-                  </h2>
-                  <p className="text-sm text-slate-300">
-                    Choose the service type and request your preferred day and
-                    time.
-                  </p>
-                </div>
-              </div>
+          {flow === "cleaning" ? (
+            <div className="rounded-section bg-brand-navy p-6 text-white shadow-soft sm:p-8">
+              <button
+                type="button"
+                onClick={() => setFlow(null)}
+                className="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-white/90 hover:text-brand-gold"
+              >
+                <ArrowLeft size={16} aria-hidden="true" />
+                Back to options
+              </button>
+
+              <h2 className="font-display text-display-md text-white">
+                Request Cleaning
+              </h2>
+              <p className="mt-3 text-sm leading-7 text-slate-300">
+                Choose the service type and preferred day. We’ll follow up to confirm.
+              </p>
 
               <form
                 name="cleaning-service"
                 method="POST"
                 data-netlify="true"
-                onSubmit={handleSubmit}
                 netlify-honeypot="bot-field"
+                onSubmit={handleSubmit}
                 className="mt-8 space-y-5"
               >
-                <input
-                  type="hidden"
-                  name="form-name"
-                  value="cleaning-service"
-                />
-                <input
-                  type="hidden"
-                  name="serviceType"
-                  value="Cleaning Service"
-                />
+                <input type="hidden" name="form-name" value="cleaning-service" />
+                <input type="hidden" name="serviceType" value="Cleaning Service" />
                 <p className="hidden">
                   <label>
                     Don’t fill this out if you’re human:{" "}
@@ -280,41 +283,57 @@ export default function Bookings() {
                 </p>
 
                 <div className="grid gap-5 sm:grid-cols-2">
-                  <Input label="Full Name">
+                  <div>
+                    <label htmlFor="cleaning-fullName" className="mb-2 block text-sm font-semibold text-white">
+                      Full Name
+                    </label>
                     <input
-                      required
+                      id="cleaning-fullName"
                       name="fullName"
-                      className={`${baseFieldClass()} border-white/10 bg-white text-slate-800`}
-                      placeholder="Your full name"
-                    />
-                  </Input>
-                  <Input label="Phone Number">
-                    <input
                       required
+                      placeholder="Your full name"
+                      className={fieldClassName("border-white/10")}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="cleaning-phone" className="mb-2 block text-sm font-semibold text-white">
+                      Phone Number
+                    </label>
+                    <input
+                      id="cleaning-phone"
                       name="phone"
                       type="tel"
-                      className={`${baseFieldClass()} border-white/10 bg-white text-slate-800`}
+                      required
                       placeholder="(555) 555-5555"
+                      className={fieldClassName("border-white/10")}
                     />
-                  </Input>
+                  </div>
                 </div>
 
                 <div className="grid gap-5 sm:grid-cols-2">
-                  <Input label="Email Address">
+                  <div>
+                    <label htmlFor="cleaning-email" className="mb-2 block text-sm font-semibold text-white">
+                      Email Address
+                    </label>
                     <input
-                      required
+                      id="cleaning-email"
                       name="email"
                       type="email"
-                      className={`${baseFieldClass()} border-white/10 bg-white text-slate-800`}
-                      placeholder="you@example.com"
-                    />
-                  </Input>
-                  <Input label="Cleaning Type">
-                    <select
                       required
+                      placeholder="you@example.com"
+                      className={fieldClassName("border-white/10")}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="cleaningType" className="mb-2 block text-sm font-semibold text-white">
+                      Cleaning Type
+                    </label>
+                    <select
+                      id="cleaningType"
                       name="cleaningType"
-                      className={`${baseFieldClass()} border-white/10 bg-white text-slate-800`}
+                      required
                       defaultValue=""
+                      className={fieldClassName("border-white/10")}
                     >
                       <option value="" disabled>
                         Select cleaning type
@@ -323,76 +342,98 @@ export default function Bookings() {
                         <option key={option}>{option}</option>
                       ))}
                     </select>
-                  </Input>
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="cleaning-address" className="mb-2 block text-sm font-semibold text-white">
+                    Service Address
+                  </label>
+                  <input
+                    id="cleaning-address"
+                    name="address"
+                    required
+                    placeholder="Service address"
+                    className={fieldClassName("border-white/10")}
+                  />
                 </div>
 
                 <div className="grid gap-5 sm:grid-cols-2">
-                  <Input label="Preferred Date">
+                  <div>
+                    <label htmlFor="cleaning-preferredDate" className="mb-2 block text-sm font-semibold text-white">
+                      Preferred Date
+                    </label>
                     <input
-                      required
+                      id="cleaning-preferredDate"
                       name="preferredDate"
                       type="date"
-                      className={`${baseFieldClass()} border-white/10 bg-white text-slate-800`}
-                    />
-                  </Input>
-                  <Input label="Preferred Time Window">
-                    <select
                       required
+                      className={fieldClassName("border-white/10")}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="cleaning-preferredTime" className="mb-2 block text-sm font-semibold text-white">
+                      Preferred Time Window
+                    </label>
+                    <select
+                      id="cleaning-preferredTime"
                       name="preferredTime"
-                      className={`${baseFieldClass()} border-white/10 bg-white text-slate-800`}
+                      required
                       defaultValue=""
+                      className={fieldClassName("border-white/10")}
                     >
                       <option value="" disabled>
                         Select a time window
                       </option>
-                      <option>8:00 AM - 10:00 AM</option>
-                      <option>10:00 AM - 12:00 PM</option>
-                      <option>12:00 PM - 2:00 PM</option>
-                      <option>2:00 PM - 4:00 PM</option>
-                      <option>4:00 PM - 6:00 PM</option>
-                      <option>6:00 PM - 8:00 PM</option>
+                      {timeWindows.map((window) => (
+                        <option key={window}>{window}</option>
+                      ))}
                     </select>
-                  </Input>
+                  </div>
                 </div>
 
-                <div className="grid gap-5 sm:grid-cols-2">
-                  <Input label="Property Size">
-                    <input
-                      name="propertySize"
-                      className={`${baseFieldClass()} border-white/10 bg-white text-slate-800`}
-                      placeholder="Example: 3 bed / 2 bath"
-                    />
-                  </Input>
-                  <Input label="Address">
-                    <input
-                      required
-                      name="address"
-                      className={`${baseFieldClass()} border-white/10 bg-white text-slate-800`}
-                      placeholder="Service address"
-                    />
-                  </Input>
+                <div>
+                  <label htmlFor="propertySize" className="mb-2 block text-sm font-semibold text-white">
+                    Home / Property Details
+                  </label>
+                  <input
+                    id="propertySize"
+                    name="propertySize"
+                    placeholder="Example: 3 bed / 2 bath"
+                    className={fieldClassName("border-white/10")}
+                  />
                 </div>
 
-                <Input label="Special Instructions">
+                <div>
+                  <label htmlFor="cleaning-details" className="mb-2 block text-sm font-semibold text-white">
+                    Notes
+                  </label>
                   <textarea
+                    id="cleaning-details"
                     name="details"
                     rows="5"
-                    className={`${baseFieldClass()} border-white/10 bg-white text-slate-800`}
                     placeholder="Pets, gate code, priority areas, or anything else we should know."
+                    className={fieldClassName("border-white/10")}
                   />
-                </Input>
+                </div>
 
-                <button
-                  type="submit"
-                  className="inline-flex w-full items-center justify-center rounded-2xl bg-brand-gold px-6 py-4 text-sm font-semibold text-white transition hover:-translate-y-0.5"
-                >
-                  Submit Cleaning Request
-                </button>
+                {error ? (
+                  <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">
+                    {error}{" "}
+                    <a href={`tel:${COMPANY.phoneTel}`} className="font-semibold underline">
+                      {COMPANY.phoneDisplay}
+                    </a>
+                  </div>
+                ) : null}
+
+                <Button type="submit" variant="primary" size="lg" className="w-full" disabled={submitting}>
+                  {submitting ? "Submitting…" : "Submit Cleaning Request"}
+                </Button>
               </form>
             </div>
-          </div>
-        </div>
-      </section>
+          ) : null}
+        </Container>
+      </Section>
     </main>
   );
 }
