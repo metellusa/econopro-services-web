@@ -24,6 +24,7 @@ import CtaStrip from "../components/ui/CtaStrip";
 import ProjectProgressShowcase from "../components/ProjectProgressShowcase";
 import { COMPANY } from "../data/site";
 import { SERVICES, getServicePath } from "../data/services";
+import { REVIEWS } from "../data/reviews";
 
 const servicesPreview = SERVICES.map((service) => ({
   title: service.shortTitle,
@@ -57,23 +58,6 @@ const trustItems = [
     icon: Clock3,
     title: "Convenient Hours",
     description: "Mon–Fri 8am–8pm · Sat 8am–5pm",
-  },
-];
-
-const testimonials = [
-  {
-    quote:
-      "I had my living room and dining room walls painted recently, and I’m so happy with how everything turned out! The team was super professional and showed up right on time.",
-    name: "Clement Beauvais",
-  },
-  {
-    quote:
-      "Did everything that was asked and did it well. Will be using them on a regular basis. Thanks again for a great job.",
-    name: "Douglas Lanier",
-  },
-  {
-    quote: "Excellent service! Very professional, quick and reasonable price.",
-    name: "Mary Valero",
   },
 ];
 
@@ -267,7 +251,7 @@ export default function Home() {
               What customers say
             </h2>
             <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-1">
-              {testimonials.map((review) => (
+              {REVIEWS.map((review) => (
                 <ReviewCard key={review.name} {...review} />
               ))}
             </div>

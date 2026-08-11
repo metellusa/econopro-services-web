@@ -4,27 +4,12 @@ import Section from "../components/ui/Section";
 import SectionEyebrow from "../components/ui/SectionEyebrow";
 import CtaStrip from "../components/ui/CtaStrip";
 import Button from "../components/ui/Button";
-
-const reviews = [
-  {
-    quote:
-      "I had my living room and dining room walls painted recently, and I’m so happy with how everything turned out! The team was super professional and showed up right on time.",
-    name: "Clement Beauvais",
-  },
-  {
-    quote:
-      "Did everything that was asked and did it well. Will be using them on a regular basis. Thanks again for a great job.",
-    name: "Douglas Lanier",
-  },
-  {
-    quote: "Excellent service! Very professional, quick and reasonable price.",
-    name: "Mary Valero",
-  },
-];
+import { BBB, REVIEWS } from "../data/reviews";
+import { COMPANY } from "../data/site";
 
 export default function Reviews() {
   return (
-    <>
+    <main>
       <Section tone="cream" className="bg-hero-glow">
         <Container>
           <div className="max-w-3xl">
@@ -33,7 +18,8 @@ export default function Reviews() {
               What customers say about EconoPro
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-7 text-brand-muted sm:text-lg sm:leading-8">
-              Real feedback from customers who have worked with EconoPro Services.
+              Real feedback from customers who have worked with EconoPro Services
+              in Orlando and Tampa.
             </p>
           </div>
         </Container>
@@ -42,9 +28,43 @@ export default function Reviews() {
       <Section tone="white">
         <Container>
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {reviews.map((review) => (
+            {REVIEWS.map((review) => (
               <ReviewCard key={review.name} {...review} />
             ))}
+          </div>
+
+          <div className="mt-12 rounded-section border border-brand-border bg-brand-cream p-8 text-center">
+            <SectionEyebrow>Trust</SectionEyebrow>
+            <h2 className="mt-3 font-display text-display-md text-brand-navy">
+              BBB Accredited Business
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-brand-muted">
+              EconoPro Services is a BBB Accredited Business. View our public
+              profile for additional company information.
+            </p>
+            <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <a
+                href={BBB.profileUrl}
+                target="_blank"
+                rel="nofollow noreferrer"
+                className="inline-flex rounded-2xl bg-white p-3 shadow-card"
+              >
+                <img
+                  src={BBB.sealUrl}
+                  alt="BBB Accredited Business"
+                  className="h-12 w-auto"
+                />
+              </a>
+              <Button
+                href={BBB.profileUrl}
+                variant="outline"
+                size="lg"
+                target="_blank"
+                rel="nofollow noreferrer"
+              >
+                View BBB Profile
+              </Button>
+            </div>
           </div>
 
           <div className="mt-10 text-center">
@@ -58,9 +78,9 @@ export default function Reviews() {
       <CtaStrip
         title="Ready to get started?"
         description="Tell us about your project and we’ll follow up to confirm the details."
-        secondaryLabel="Contact Us"
-        secondaryTo="/contact"
+        secondaryLabel={`Call ${COMPANY.phoneDisplay}`}
+        secondaryHref={`tel:${COMPANY.phoneTel}`}
       />
-    </>
+    </main>
   );
 }
