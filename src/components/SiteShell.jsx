@@ -1,21 +1,21 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Menu, X, Phone, Mail, MapPin } from "lucide-react";
-
-const navLinks = [
-  { label: "Home", to: "/" },
-  { label: "Services", to: "/services" },
-  { label: "Bookings", to: "/bookings" },
-  { label: "Financing", to: "/financing-options" },
-  { label: "Gallery", to: "/gallery" },
-  { label: "FAQ", to: "/faq" },
-  { label: "Contact", to: "/contact" },
-];
+import { Menu, X, Phone, Mail, MapPin, Clock3 } from "lucide-react";
+import Button from "./ui/Button";
+import Container from "./ui/Container";
+import {
+  COMPANY,
+  FOOTER_COMPANY_LINKS,
+  FOOTER_SERVICE_LINKS,
+  NAV_LINKS,
+} from "../data/site";
 
 function navLinkClass(isActive) {
   return [
     "text-sm font-medium transition",
-    isActive ? "text-brand-navy" : "text-slate-700 hover:text-brand-navy",
+    isActive
+      ? "text-brand-navy"
+      : "text-slate-600 hover:text-brand-navy",
   ].join(" ");
 }
 
@@ -23,66 +23,86 @@ export default function SiteShell({ children }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const year = useMemo(() => new Date().getFullYear(), []);
 
+  useEffect(() => {
+    if (!mobileMenuOpen) return undefined;
+
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") setMobileMenuOpen(false);
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
   return (
     <div className="min-h-screen bg-brand-cream">
-      <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-brand-cream/90 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
+      <header className="sticky top-0 z-50 border-b border-brand-border/70 bg-brand-cream/90 backdrop-blur-xl">
+        <Container className="flex items-center justify-between gap-4 py-3.5 lg:py-4">
           <Link
             to="/"
-            className="flex items-center gap-3"
+            className="flex min-w-0 items-center gap-3"
             onClick={() => setMobileMenuOpen(false)}
           >
             <img
               src="/logo.jpg"
               alt="EconoPro Services logo"
-              className="h-12 w-12 rounded-2xl object-cover shadow-md"
+              className="h-11 w-11 shrink-0 rounded-2xl object-cover shadow-md sm:h-12 sm:w-12"
             />
-            <div>
-              <p className="text-lg font-bold text-brand-navy">
-                EconoPro Services
+            <div className="min-w-0">
+              <p className="truncate text-base font-bold text-brand-navy sm:text-lg">
+                {COMPANY.name}
               </p>
-              <p className="text-xs uppercase tracking-[0.18em] text-brand-gold">
-                Affordable Quality, Dependable Service
+              <p className="hidden text-[10px] uppercase tracking-[0.16em] text-brand-gold sm:block sm:text-xs">
+                {COMPANY.tagline}
               </p>
             </div>
           </Link>
 
-          <nav className="hidden items-center gap-8 lg:flex">
-            {navLinks.map((link) => (
+          <nav className="hidden items-center gap-6 xl:flex" aria-label="Primary">
+            {NAV_LINKS.map((link) => (
               <NavLink
                 key={link.label}
                 to={link.to}
+                end={link.to === "/"}
                 className={({ isActive }) => navLinkClass(isActive)}
               >
                 {link.label}
               </NavLink>
             ))}
 
-            <Link
-              to="/bookings"
-              className="rounded-full bg-brand-navy px-5 py-3 text-sm font-semibold text-white transition hover:translate-y-[-1px]"
-            >
-              Book Now
-            </Link>
+            <Button to="/bookings" variant="primary" size="sm">
+              Request Estimate
+            </Button>
           </nav>
 
           <button
             type="button"
-            className="inline-flex rounded-xl border border-slate-200 bg-white p-2 text-brand-navy lg:hidden"
+            className="inline-flex rounded-xl border border-brand-border bg-white p-2.5 text-brand-navy transition hover:bg-brand-cream xl:hidden"
             onClick={() => setMobileMenuOpen((prev) => !prev)}
-            aria-label="Toggle navigation"
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation"
+            aria-label={mobileMenuOpen ? "Close navigation" : "Open navigation"}
           >
-            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            {mobileMenuOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
           </button>
-        </div>
+        </Container>
 
         {mobileMenuOpen ? (
-          <div className="border-t border-slate-200 bg-white lg:hidden">
-            <div className="mx-auto flex max-w-7xl flex-col gap-1 px-6 py-4">
-              {navLinks.map((link) => (
+          <div
+            id="mobile-navigation"
+            className="border-t border-brand-border bg-white xl:hidden"
+          >
+            <Container className="flex flex-col gap-1 py-4">
+              {NAV_LINKS.map((link) => (
                 <NavLink
                   key={link.label}
                   to={link.to}
+                  end={link.to === "/"}
                   className={({ isActive }) =>
                     [
                       "rounded-xl px-3 py-3 text-sm font-medium transition",
@@ -97,22 +117,24 @@ export default function SiteShell({ children }) {
                 </NavLink>
               ))}
 
-              <Link
+              <Button
                 to="/bookings"
-                className="mt-2 rounded-xl bg-brand-navy px-4 py-3 text-center text-sm font-semibold text-white"
+                variant="primary"
+                size="lg"
+                className="mt-2 w-full"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Book Now
-              </Link>
-            </div>
+                Request Estimate
+              </Button>
+            </Container>
           </div>
         ) : null}
       </header>
 
       {children}
 
-      <footer className="border-t border-slate-200 bg-white">
-        <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 lg:grid-cols-[1.2fr_0.8fr_0.8fr] lg:px-8">
+      <footer className="border-t border-brand-border bg-white">
+        <Container className="grid gap-10 py-14 md:grid-cols-2 xl:grid-cols-[1.3fr_0.8fr_0.8fr_1fr]">
           <div>
             <div className="flex items-center gap-3">
               <img
@@ -121,72 +143,96 @@ export default function SiteShell({ children }) {
                 className="h-14 w-14 rounded-2xl object-cover shadow-md"
               />
               <div>
-                <p className="text-xl font-bold text-brand-navy">
-                  EconoPro Services
-                </p>
-                <p className="text-sm text-slate-600">
-                  Affordable Quality, Dependable Service
-                </p>
+                <p className="text-xl font-bold text-brand-navy">{COMPANY.name}</p>
+                <p className="text-sm text-brand-muted">{COMPANY.tagline}</p>
               </div>
             </div>
 
-            <p className="mt-5 max-w-xl text-sm leading-7 text-slate-600">
-              Trusted handyman, home improvement, and cleaning solutions for
-              customers in the Orlando and Tampa, FL areas.
+            <p className="mt-5 max-w-md text-sm leading-7 text-brand-muted">
+              {COMPANY.shortDescription}
             </p>
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-gold">
-              Contact
-            </h3>
-            <div className="mt-5 space-y-4 text-sm text-slate-600">
-              <p className="flex items-start gap-3">
-                <Phone size={18} className="mt-0.5 text-brand-navy" />
-                <a href="tel:8133629287" className="hover:text-brand-navy">
-                  (813) 362-9287
-                </a>
-              </p>
-              <p className="flex items-start gap-3">
-                <Mail size={18} className="mt-0.5 text-brand-navy" />
-                <a
-                  href="mailto:admin@econoproservices.com"
-                  className="hover:text-brand-navy"
-                >
-                  admin@econoproservices.com
-                </a>
-              </p>
-              <p className="flex items-start gap-3">
-                <MapPin size={18} className="mt-0.5 text-brand-navy" />
-                Orlando & Tampa, Florida
-              </p>
-            </div>
+            <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-gold">
+              Services
+            </h2>
+            <ul className="mt-5 space-y-3 text-sm">
+              {FOOTER_SERVICE_LINKS.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    to={link.to}
+                    className="text-slate-600 transition hover:text-brand-navy"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-gold">
-              Quick Links
-            </h3>
-            <div className="mt-5 space-y-3 text-sm">
-              {navLinks.map((link) => (
-                <NavLink
-                  key={link.label}
-                  to={link.to}
-                  className={({ isActive }) =>
-                    isActive
-                      ? "block text-brand-navy"
-                      : "block text-slate-600 transition hover:text-brand-navy"
-                  }
-                >
-                  {link.label}
-                </NavLink>
+            <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-gold">
+              Company
+            </h2>
+            <ul className="mt-5 space-y-3 text-sm">
+              {FOOTER_COMPANY_LINKS.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    to={link.to}
+                    className="text-slate-600 transition hover:text-brand-navy"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
-        </div>
 
-        <div className="border-t border-slate-200 px-6 py-5 text-center text-sm text-slate-500 lg:px-8">
-          © {year} EconoPro Services. All rights reserved.
+          <div>
+            <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-gold">
+              Contact
+            </h2>
+            <ul className="mt-5 space-y-4 text-sm text-slate-600">
+              <li className="flex items-start gap-3">
+                <Phone size={18} className="mt-0.5 shrink-0 text-brand-navy" aria-hidden="true" />
+                <a href={`tel:${COMPANY.phoneTel}`} className="transition hover:text-brand-navy">
+                  {COMPANY.phoneDisplay}
+                </a>
+              </li>
+              <li className="flex items-start gap-3">
+                <Mail size={18} className="mt-0.5 shrink-0 text-brand-navy" aria-hidden="true" />
+                <a
+                  href={`mailto:${COMPANY.email}`}
+                  className="break-all transition hover:text-brand-navy"
+                >
+                  {COMPANY.email}
+                </a>
+              </li>
+              <li className="flex items-start gap-3">
+                <MapPin size={18} className="mt-0.5 shrink-0 text-brand-navy" aria-hidden="true" />
+                <span>{COMPANY.serviceArea}</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Clock3 size={18} className="mt-0.5 shrink-0 text-brand-navy" aria-hidden="true" />
+                <span>
+                  {COMPANY.hours.weekdays}
+                  <br />
+                  {COMPANY.hours.saturday}
+                </span>
+              </li>
+            </ul>
+          </div>
+        </Container>
+
+        <div className="border-t border-brand-border">
+          <Container className="flex flex-col items-center justify-between gap-3 py-5 text-center text-sm text-slate-500 sm:flex-row sm:text-left">
+            <p>© {year} {COMPANY.name}. All rights reserved.</p>
+            <div className="flex items-center gap-4">
+              <span className="text-slate-400">Privacy Policy</span>
+              <span className="text-slate-400">Terms</span>
+            </div>
+          </Container>
         </div>
       </footer>
     </div>

@@ -8,6 +8,8 @@ import Faq from "./pages/Faq";
 import FinancingOptions from "./pages/FinancingOptions";
 import Contact from "./pages/Contact";
 import ThankYou from "./pages/ThankYou";
+import About from "./pages/About";
+import Reviews from "./pages/Reviews";
 
 export default function App() {
   return (
@@ -18,6 +20,9 @@ export default function App() {
         <Route path="/bookings" element={<Bookings />} />
         <Route path="/financing-options" element={<FinancingOptions />} />
         <Route path="/gallery" element={<Gallery />} />
+        <Route path="/projects" element={<Navigate to="/gallery" replace />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/reviews" element={<Reviews />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/thank-you" element={<ThankYou />} />
