@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { BadgeDollarSign, ChevronRight, ShieldCheck } from "lucide-react";
 import { trackEvent, AnalyticsEvents } from "../lib/analytics";
 
@@ -142,18 +143,18 @@ export default function FinancingOptions() {
             </p>
 
             <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-              <a
-                href="/bookings"
+              <Link
+                to="/bookings"
                 className="rounded-full bg-brand-navy px-6 py-4 text-sm font-semibold text-white"
               >
-                Request Estimate
-              </a>
-              <a
-                href="/contact"
+                Request an Estimate
+              </Link>
+              <Link
+                to="/contact"
                 className="rounded-full border border-brand-navy/15 px-6 py-4 text-sm font-semibold text-brand-navy"
               >
                 Contact Us
-              </a>
+              </Link>
             </div>
           </div>
         </div>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import SectionHeading from "../components/SectionHeading";
 
 const faqs = [
@@ -100,18 +101,18 @@ export default function Faq() {
             </p>
 
             <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-              <a
-                href="/contact"
+              <Link
+                to="/contact"
                 className="rounded-full bg-white px-6 py-4 text-sm font-semibold text-brand-navy"
               >
                 Contact Us
-              </a>
-              <a
-                href="/bookings"
+              </Link>
+              <Link
+                to="/bookings"
                 className="rounded-full border border-white/15 px-6 py-4 text-sm font-semibold text-white"
               >
-                Book Now
-              </a>
+                Request an Estimate
+              </Link>
             </div>
           </div>
         </div>

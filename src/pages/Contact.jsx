@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Mail, MapPin, Phone, Clock3, ChevronRight } from "lucide-react";
 
 export default function Contact() {
@@ -94,38 +95,38 @@ export default function Contact() {
             </p>
 
             <div className="mt-8 space-y-4">
-              <a
-                href="/bookings"
+              <Link
+                to="/bookings"
                 className="flex items-center justify-between rounded-2xl border border-slate-200 bg-brand-cream px-5 py-5 transition hover:border-brand-gold/40 hover:bg-brand-cream/70"
               >
                 <div>
                   <p className="text-lg font-semibold text-brand-navy">
-                    Request an Onsite Estimate
+                    Request an Estimate
                   </p>
                   <p className="mt-1 text-sm text-slate-600">
                     For flooring, drywall, painting, and other project work
                   </p>
                 </div>
                 <ChevronRight size={20} className="text-brand-navy" />
-              </a>
+              </Link>
 
-              <a
-                href="/bookings"
+              <Link
+                to="/bookings"
                 className="flex items-center justify-between rounded-2xl border border-slate-200 bg-brand-cream px-5 py-5 transition hover:border-brand-gold/40 hover:bg-brand-cream/70"
               >
                 <div>
                   <p className="text-lg font-semibold text-brand-navy">
-                    Schedule a Cleaning Service
+                    Request Cleaning
                   </p>
                   <p className="mt-1 text-sm text-slate-600">
-                    Standard, deep, and move-out cleaning appointments
+                    Standard, deep, and move-out cleaning requests
                   </p>
                 </div>
                 <ChevronRight size={20} className="text-brand-navy" />
-              </a>
+              </Link>
 
-              <a
-                href="/financing-options"
+              <Link
+                to="/financing-options"
                 className="flex items-center justify-between rounded-2xl border border-slate-200 bg-brand-cream px-5 py-5 transition hover:border-brand-gold/40 hover:bg-brand-cream/70"
               >
                 <div>
@@ -137,7 +138,7 @@ export default function Contact() {
                   </p>
                 </div>
                 <ChevronRight size={20} className="text-brand-navy" />
-              </a>
+              </Link>
             </div>
 
             <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-5">
