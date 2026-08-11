@@ -126,6 +126,15 @@ Apply `supabase/migrations/20260811190000_phase4_contractor_progress.sql`.
 - `/admin/reviews` staff approve/reject/publish queue + open issues
 - Photos: 8MB max, image types only; storage policies allow assigned contractors
 
+## Phase 5: Client + guest access
+
+Apply `supabase/migrations/20260811200000_phase5_client_guest_access.sql`.
+
+- `/client` and `/client/projects/:id` for registered clients (RLS + client-safe RPC)
+- `/project-access/:token` full guest project UI (no login; hashed token only)
+- Admin project → **Guest Access** tab: generate/copy/revoke links
+- Guest→registered upgrade uses same `clients` row via `link_client_to_user`
+
 ## Production build
 
 ```bash

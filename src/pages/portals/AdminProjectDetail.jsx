@@ -6,6 +6,7 @@ import Button from "../../components/ui/Button";
 import { fieldClassName } from "../../components/ui/FormControls";
 import { StatusBadge } from "../../components/portal/ProjectBadges";
 import ProjectPhasesPanel from "../../components/portal/ProjectPhasesPanel";
+import GuestLinkManager from "../../components/portal/GuestLinkManager";
 import { getProject, updateProject, uploadProjectFile } from "../../lib/projectApi";
 import { projectStatusLabel } from "../../lib/projects";
 
@@ -14,6 +15,7 @@ const TABS = [
   "Phases",
   "Team",
   "Client",
+  "Guest Access",
   "Files",
   "Notes",
   "Activity",
@@ -245,6 +247,13 @@ export default function AdminProjectDetail() {
                 value={`Email ${project.clients?.email_notifications_enabled ? "on" : "off"} · SMS ${project.clients?.sms_notifications_enabled ? "on" : "off"}`}
               />
             </div>
+          ) : null}
+
+          {tab === "Guest Access" ? (
+            <GuestLinkManager
+              clientId={project.client_id}
+              projectId={project.id}
+            />
           ) : null}
 
           {tab === "Files" ? (

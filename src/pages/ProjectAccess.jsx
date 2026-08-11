@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Container from "../components/ui/Container";
+import ClientProjectView from "../components/portal/ClientProjectView";
 import { isSupabaseConfigured } from "../lib/supabase";
-import { validateGuestAccessToken } from "../lib/backend";
+import { getGuestProjectPayload } from "../lib/clientApi";
+import { COMPANY } from "../data/site";
 
-/**
- * Phase 1 foundation only: validates the tokenized guest link.
- * Full guest project UI arrives in a later phase.
- */
 export default function ProjectAccess() {
   const { token } = useParams();
   const [status, setStatus] = useState("loading");
-  const [access, setAccess] = useState(null);
+  const [payload, setPayload] = useState(null);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -31,7 +29,7 @@ export default function ProjectAccess() {
       }
 
       try {
-        const result = await validateGuestAccessToken(token);
+        const result = await getGuestProjectPayload(token);
         if (cancelled) return;
 
         if (!result) {
@@ -40,7 +38,7 @@ export default function ProjectAccess() {
           return;
         }
 
-        setAccess(result);
+        setPayload(result);
         setStatus("ready");
       } catch (err) {
         if (cancelled) return;
@@ -56,49 +54,44 @@ export default function ProjectAccess() {
   }, [token]);
 
   return (
-    <div className="flex min-h-screen items-center bg-brand-cream">
-      <Container className="max-w-lg py-16">
-        <div className="rounded-section border border-brand-border bg-white p-8 shadow-card">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-gold">
-            Project Access
-          </p>
-          <h1 className="mt-3 font-display text-3xl text-brand-navy">
-            Secure guest link
-          </h1>
+    <div className="min-h-screen bg-brand-cream">
+      <header className="border-b border-brand-border bg-white">
+        <Container className="flex items-center justify-between py-4">
+          <Link to="/" className="flex items-center gap-3">
+            <img src="/logo.jpg" alt="" className="h-10 w-10 rounded-2xl object-cover" />
+            <span className="font-semibold text-brand-navy">{COMPANY.name}</span>
+          </Link>
+          <a
+            href={`tel:${COMPANY.phoneTel}`}
+            className="text-sm font-semibold text-brand-navy"
+          >
+            Call us
+          </a>
+        </Container>
+      </header>
 
-          {status === "loading" ? (
-            <p className="mt-4 text-sm text-brand-muted">Validating your link…</p>
-          ) : null}
+      <Container className="py-8 max-w-3xl">
+        {status === "loading" ? (
+          <p className="text-sm text-brand-muted">Validating your secure link…</p>
+        ) : null}
 
-          {status === "error" ? (
-            <p className="mt-4 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-              {error}
+        {status === "error" ? (
+          <div className="rounded-section border border-red-200 bg-white p-8 shadow-card">
+            <h1 className="font-display text-3xl text-brand-navy">Link unavailable</h1>
+            <p className="mt-4 text-sm text-red-700">{error}</p>
+            <p className="mt-4 text-sm text-brand-muted">
+              Contact EconoPro at {COMPANY.phoneDisplay} if you need a new link.
             </p>
-          ) : null}
+          </div>
+        ) : null}
 
-          {status === "ready" ? (
-            <div className="mt-4 space-y-3 text-sm leading-7 text-brand-muted">
-              <p>
-                Access confirmed for{" "}
-                <span className="font-semibold text-brand-navy">
-                  {access.client_name}
-                </span>
-                .
-              </p>
-              <p>
-                Your project view will appear here in a later release. This link
-                does not expose internal project IDs and can be revoked by
-                EconoPro staff at any time.
-              </p>
-            </div>
-          ) : null}
-
-          <p className="mt-8 text-sm">
-            <Link to="/" className="font-semibold text-brand-navy hover:text-brand-gold">
-              Back to website
-            </Link>
-          </p>
-        </div>
+        {status === "ready" ? (
+          <ClientProjectView
+            project={payload.project}
+            clientName={payload.client_name}
+            mode="guest"
+          />
+        ) : null}
       </Container>
     </div>
   );

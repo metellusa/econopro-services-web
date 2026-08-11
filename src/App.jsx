@@ -30,6 +30,7 @@ import AdminReviews from "./pages/portals/AdminReviews";
 import ContractorHome from "./pages/portals/ContractorHome";
 import ContractorProjectDetail from "./pages/portals/ContractorProjectDetail";
 import ClientHome from "./pages/portals/ClientHome";
+import ClientProjectDetail from "./pages/portals/ClientProjectDetail";
 import { APP_ROLES, STAFF_ROLES } from "./lib/roles";
 
 function MarketingLayout() {
@@ -120,12 +121,13 @@ export default function App() {
             <PortalShell
               title="EconoPro Client"
               accent="Client Portal"
-              navItems={[{ to: "/client", label: "Overview", end: true }]}
+              navItems={[{ to: "/client", label: "Projects", end: true }]}
             />
           </ProtectedRoute>
         }
       >
         <Route index element={<ClientHome />} />
+        <Route path="projects/:projectId" element={<ClientProjectDetail />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />
