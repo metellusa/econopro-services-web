@@ -2,3 +2,6 @@
 /dist
 /buildphases
 .DS_Store
+.env
+.env.*
+!.env.example

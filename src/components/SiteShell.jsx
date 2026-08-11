@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import { Menu, X, Phone, Mail, MapPin, Clock3 } from "lucide-react";
 import Container from "./ui/Container";
 import RequestEstimateButton from "./RequestEstimateButton";
@@ -133,7 +133,7 @@ export default function SiteShell({ children }) {
         ) : null}
       </header>
 
-      {children}
+      {children ?? <Outlet />}
 
       <footer className="border-t border-brand-border bg-white">
         <Container className="grid gap-10 py-14 md:grid-cols-2 xl:grid-cols-[1.3fr_0.8fr_0.8fr_1fr]">

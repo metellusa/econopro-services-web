@@ -1,6 +1,8 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import SiteShell from "./components/SiteShell";
 import PageMeta from "./components/seo/PageMeta";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
+import PortalShell from "./components/portal/PortalShell";
 import Home from "./pages/Home";
 import Services from "./pages/Services";
 import ServiceDetail from "./pages/ServiceDetail";
@@ -15,12 +17,28 @@ import About from "./pages/About";
 import Reviews from "./pages/Reviews";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
+import SignIn from "./pages/auth/SignIn";
+import ResetPassword from "./pages/auth/ResetPassword";
+import UpdatePassword from "./pages/auth/UpdatePassword";
+import ProjectAccess from "./pages/ProjectAccess";
+import AdminHome from "./pages/portals/AdminHome";
+import ContractorHome from "./pages/portals/ContractorHome";
+import ClientHome from "./pages/portals/ClientHome";
+import { APP_ROLES, STAFF_ROLES } from "./lib/roles";
 
-export default function App() {
+function MarketingLayout() {
   return (
     <SiteShell>
       <PageMeta />
-      <Routes>
+      <Outlet />
+    </SiteShell>
+  );
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route element={<MarketingLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/services" element={<Services />} />
         <Route path="/services/:slug" element={<ServiceDetail />} />
@@ -36,8 +54,59 @@ export default function App() {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/thank-you" element={<ThankYou />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </SiteShell>
+      </Route>
+
+      <Route path="/sign-in" element={<SignIn />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/update-password" element={<UpdatePassword />} />
+      <Route path="/project-access/:token" element={<ProjectAccess />} />
+
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute allowRoles={[...STAFF_ROLES]}>
+            <PortalShell
+              title="EconoPro Admin"
+              accent="Staff Portal"
+              navItems={[{ to: "/admin", label: "Overview", end: true }]}
+            />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<AdminHome />} />
+      </Route>
+
+      <Route
+        path="/contractor"
+        element={
+          <ProtectedRoute allowRoles={[APP_ROLES.CONTRACTOR]}>
+            <PortalShell
+              title="EconoPro Contractor"
+              accent="Field Portal"
+              navItems={[{ to: "/contractor", label: "Overview", end: true }]}
+            />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<ContractorHome />} />
+      </Route>
+
+      <Route
+        path="/client"
+        element={
+          <ProtectedRoute allowRoles={[APP_ROLES.CLIENT]}>
+            <PortalShell
+              title="EconoPro Client"
+              accent="Client Portal"
+              navItems={[{ to: "/client", label: "Overview", end: true }]}
+            />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<ClientHome />} />
+      </Route>
+
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }
