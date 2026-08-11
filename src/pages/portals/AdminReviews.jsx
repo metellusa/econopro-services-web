@@ -10,6 +10,7 @@ import {
   reviewProgressUpdate,
   updateIssueStatus,
 } from "../../lib/contractorApi";
+import { processQueuedNotifications } from "../../lib/notifications/service";
 
 export default function AdminReviews() {
   const [updates, setUpdates] = useState([]);
@@ -161,6 +162,13 @@ function UpdateCard({ update, onChanged, onError }) {
     setBusy(true);
     try {
       await reviewProgressUpdate(update.id, action, clientText, notes);
+      if (action === "publish") {
+        try {
+          await processQueuedNotifications();
+        } catch {
+          // Publish already succeeded; failures appear in Notifications.
+        }
+      }
       await onChanged();
     } catch (err) {
       onError(err.message || "Review action failed.");

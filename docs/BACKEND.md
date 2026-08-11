@@ -135,6 +135,16 @@ Apply `supabase/migrations/20260811200000_phase5_client_guest_access.sql`.
 - Admin project → **Guest Access** tab: generate/copy/revoke links
 - Guest→registered upgrade uses same `clients` row via `link_client_to_user`
 
+## Phase 6: Notifications
+
+Apply `supabase/migrations/20260811210000_phase6_notifications.sql`.
+
+- Central `enqueue_client_notifications` respects email/SMS prefs (guests included)
+- Publishing a progress update queues email/SMS; contractor submit does not
+- `/admin/notifications` log with retry + process queued
+- Dev mode uses console adapters (`VITE_NOTIFICATIONS_MODE=development`)
+- Production sends via `netlify/functions/send-notification.js` (Resend + Twilio env vars)
+
 ## Production build
 
 ```bash
