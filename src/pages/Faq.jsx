@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import SectionHeading from "../components/SectionHeading";
+import RequestEstimateButton from "../components/RequestEstimateButton";
 
 const faqs = [
   {
@@ -107,12 +108,13 @@ export default function Faq() {
               >
                 Contact Us
               </Link>
-              <Link
-                to="/bookings"
-                className="rounded-full border border-white/15 px-6 py-4 text-sm font-semibold text-white"
+              <RequestEstimateButton
+                variant="outline-light"
+                size="lg"
+                source="faq"
               >
                 Request an Estimate
-              </Link>
+              </RequestEstimateButton>
             </div>
           </div>
         </div>

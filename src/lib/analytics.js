@@ -1,6 +1,6 @@
 /**
  * Lightweight analytics abstraction.
- * Wire a real provider ID later — do not invent credentials.
+ * Wire a real provider ID later. Do not invent credentials.
  */
 export function trackEvent(eventName, payload = {}) {
   if (!eventName) return;

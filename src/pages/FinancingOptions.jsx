@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { BadgeDollarSign, ChevronRight, ShieldCheck } from "lucide-react";
 import { trackEvent, AnalyticsEvents } from "../lib/analytics";
+import RequestEstimateButton from "../components/RequestEstimateButton";
 
 export default function FinancingOptions() {
   const [loanAmount, setLoanAmount] = useState("");
@@ -143,15 +144,12 @@ export default function FinancingOptions() {
             </p>
 
             <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-              <Link
-                to="/bookings"
-                className="rounded-full bg-brand-navy px-6 py-4 text-sm font-semibold text-white"
-              >
+              <RequestEstimateButton variant="secondary" size="lg" source="financing">
                 Request an Estimate
-              </Link>
+              </RequestEstimateButton>
               <Link
                 to="/contact"
-                className="rounded-full border border-brand-navy/15 px-6 py-4 text-sm font-semibold text-brand-navy"
+                className="rounded-full border border-brand-navy/15 px-6 py-4 text-center text-sm font-semibold text-brand-navy"
               >
                 Contact Us
               </Link>

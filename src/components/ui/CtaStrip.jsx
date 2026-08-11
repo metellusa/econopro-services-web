@@ -1,4 +1,5 @@
 import Container from "./Container";
+import RequestEstimateButton from "../RequestEstimateButton";
 import Button from "./Button";
 import SectionEyebrow from "./SectionEyebrow";
 
@@ -7,13 +8,18 @@ export default function CtaStrip({
   title,
   description,
   primaryLabel = "Request an Estimate",
-  primaryTo = "/bookings",
+  primaryOpensEstimate = true,
+  primaryTo,
   secondaryLabel,
   secondaryTo,
   secondaryHref,
   tone = "navy",
 }) {
   const isNavy = tone === "navy";
+  const opensEstimate =
+    primaryOpensEstimate &&
+    /estimate/i.test(primaryLabel) &&
+    (!primaryTo || primaryTo === "/bookings");
 
   return (
     <section className={isNavy ? "bg-brand-navy py-16 text-white sm:py-20" : "bg-brand-cream py-16 sm:py-20"}>
@@ -46,9 +52,23 @@ export default function CtaStrip({
             </p>
           ) : null}
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button to={primaryTo} variant={isNavy ? "primary" : "secondary"} size="lg">
-              {primaryLabel}
-            </Button>
+            {opensEstimate ? (
+              <RequestEstimateButton
+                variant={isNavy ? "primary" : "secondary"}
+                size="lg"
+                source="cta-strip"
+              >
+                {primaryLabel}
+              </RequestEstimateButton>
+            ) : (
+              <Button
+                to={primaryTo}
+                variant={isNavy ? "primary" : "secondary"}
+                size="lg"
+              >
+                {primaryLabel}
+              </Button>
+            )}
             {secondaryLabel && (secondaryTo || secondaryHref) ? (
               <Button
                 to={secondaryTo}

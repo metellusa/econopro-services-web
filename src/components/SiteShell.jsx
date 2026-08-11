@@ -1,14 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X, Phone, Mail, MapPin, Clock3 } from "lucide-react";
-import Button from "./ui/Button";
 import Container from "./ui/Container";
+import RequestEstimateButton from "./RequestEstimateButton";
 import {
   COMPANY,
   FOOTER_COMPANY_LINKS,
   FOOTER_SERVICE_LINKS,
   NAV_LINKS,
 } from "../data/site";
+import { useEstimateModal } from "../context/EstimateModalContext";
 
 function navLinkClass(isActive) {
   return [
@@ -22,6 +23,7 @@ function navLinkClass(isActive) {
 export default function SiteShell({ children }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const year = useMemo(() => new Date().getFullYear(), []);
+  const { openEstimateModal } = useEstimateModal();
 
   useEffect(() => {
     if (!mobileMenuOpen) return undefined;
@@ -75,9 +77,9 @@ export default function SiteShell({ children }) {
               </NavLink>
             ))}
 
-            <Button to="/bookings" variant="primary" size="sm">
+            <RequestEstimateButton variant="primary" size="sm" source="header">
               Request Estimate
-            </Button>
+            </RequestEstimateButton>
           </nav>
 
           <button
@@ -117,15 +119,15 @@ export default function SiteShell({ children }) {
                 </NavLink>
               ))}
 
-              <Button
-                to="/bookings"
+              <RequestEstimateButton
                 variant="primary"
                 size="lg"
                 className="mt-2 w-full"
+                source="mobile-nav"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Request Estimate
-              </Button>
+              </RequestEstimateButton>
             </Container>
           </div>
         ) : null}
@@ -178,12 +180,22 @@ export default function SiteShell({ children }) {
             <ul className="mt-5 space-y-3 text-sm">
               {FOOTER_COMPANY_LINKS.map((link) => (
                 <li key={link.label}>
-                  <Link
-                    to={link.to}
-                    className="text-slate-600 transition hover:text-brand-navy"
-                  >
-                    {link.label}
-                  </Link>
+                  {/estimate/i.test(link.label) ? (
+                    <button
+                      type="button"
+                      onClick={() => openEstimateModal("footer")}
+                      className="text-slate-600 transition hover:text-brand-navy"
+                    >
+                      {link.label}
+                    </button>
+                  ) : (
+                    <Link
+                      to={link.to}
+                      className="text-slate-600 transition hover:text-brand-navy"
+                    >
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -229,8 +241,12 @@ export default function SiteShell({ children }) {
           <Container className="flex flex-col items-center justify-between gap-3 py-5 text-center text-sm text-slate-500 sm:flex-row sm:text-left">
             <p>© {year} {COMPANY.name}. All rights reserved.</p>
             <div className="flex items-center gap-4">
-              <span className="text-slate-400">Privacy Policy</span>
-              <span className="text-slate-400">Terms</span>
+              <Link to="/privacy" className="transition hover:text-brand-navy">
+                Privacy Policy
+              </Link>
+              <Link to="/terms" className="transition hover:text-brand-navy">
+                Terms of Use
+              </Link>
             </div>
           </Container>
         </div>

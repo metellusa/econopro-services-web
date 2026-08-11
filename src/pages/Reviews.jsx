@@ -4,6 +4,7 @@ import Section from "../components/ui/Section";
 import SectionEyebrow from "../components/ui/SectionEyebrow";
 import CtaStrip from "../components/ui/CtaStrip";
 import Button from "../components/ui/Button";
+import RequestEstimateButton from "../components/RequestEstimateButton";
 import { BBB, REVIEWS } from "../data/reviews";
 import { COMPANY } from "../data/site";
 
@@ -68,9 +69,9 @@ export default function Reviews() {
           </div>
 
           <div className="mt-10 text-center">
-            <Button to="/bookings" variant="secondary" size="lg">
+            <RequestEstimateButton variant="secondary" size="lg" source="reviews">
               Request an Estimate
-            </Button>
+            </RequestEstimateButton>
           </div>
         </Container>
       </Section>

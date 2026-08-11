@@ -32,7 +32,7 @@ export const PAGE_META = {
   "/about": {
     title: "About EconoPro Services | Local Home Improvement in Orlando & Tampa",
     description:
-      "Learn about EconoPro Services — a local home improvement and cleaning company serving Orlando and Tampa, FL.",
+      "Learn about EconoPro Services, a local home improvement and cleaning company serving Orlando and Tampa, FL.",
   },
   "/reviews": {
     title: "Customer Reviews | EconoPro Services",
@@ -48,6 +48,16 @@ export const PAGE_META = {
     title: "Contact EconoPro Services | Orlando & Tampa",
     description:
       "Contact EconoPro Services by phone or email, or request an estimate online. Serving Orlando and Tampa, FL.",
+  },
+  "/privacy": {
+    title: "Privacy Policy | EconoPro Services",
+    description:
+      "Learn how EconoPro Services collects, uses, and protects information submitted through our website and contact forms.",
+  },
+  "/terms": {
+    title: "Terms of Use | EconoPro Services",
+    description:
+      "Terms of Use for the EconoPro Services website, including estimate requests, financing links, and site usage.",
   },
   "/thank-you": {
     title: "Request Received | EconoPro Services",

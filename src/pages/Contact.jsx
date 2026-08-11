@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { Mail, MapPin, Phone, Clock3, ChevronRight } from "lucide-react";
+import { useEstimateModal } from "../context/EstimateModalContext";
 
 export default function Contact() {
+  const { openEstimateModal } = useEstimateModal();
+
   return (
     <main>
       <section className="bg-hero-glow py-20">
@@ -89,15 +92,16 @@ export default function Contact() {
               The fastest way to get started
             </h2>
             <p className="mt-4 text-sm leading-7 text-slate-600">
-              For project estimates and cleaning appointments, the best next step
-              is to use our online booking page. That helps us gather the details
-              we need and follow up faster.
+              For project estimates, open the form below. For cleaning
+              appointments, use the booking page. That helps us gather the
+              details we need and follow up faster.
             </p>
 
             <div className="mt-8 space-y-4">
-              <Link
-                to="/bookings"
-                className="flex items-center justify-between rounded-2xl border border-slate-200 bg-brand-cream px-5 py-5 transition hover:border-brand-gold/40 hover:bg-brand-cream/70"
+              <button
+                type="button"
+                onClick={() => openEstimateModal("contact")}
+                className="flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-brand-cream px-5 py-5 text-left transition hover:border-brand-gold/40 hover:bg-brand-cream/70"
               >
                 <div>
                   <p className="text-lg font-semibold text-brand-navy">
@@ -108,7 +112,7 @@ export default function Contact() {
                   </p>
                 </div>
                 <ChevronRight size={20} className="text-brand-navy" />
-              </Link>
+              </button>
 
               <Link
                 to="/bookings"

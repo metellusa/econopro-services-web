@@ -7,6 +7,7 @@ import Section from "../components/ui/Section";
 import SectionEyebrow from "../components/ui/SectionEyebrow";
 import SectionHeading from "../components/SectionHeading";
 import CtaStrip from "../components/ui/CtaStrip";
+import RequestEstimateButton from "../components/RequestEstimateButton";
 import { getServiceBySlug, SERVICES, getServicePath } from "../data/services";
 
 export default function ServiceDetail() {
@@ -21,6 +22,7 @@ export default function ServiceDetail() {
     label: "Request an Estimate",
     to: "/bookings",
   };
+  const opensEstimate = /estimate/i.test(primaryCta.label);
 
   const otherServices = SERVICES.filter((item) => item.slug !== service.slug).slice(0, 3);
 
@@ -46,9 +48,15 @@ export default function ServiceDetail() {
               {service.summary}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button to={primaryCta.to} variant="primary" size="lg">
-                {primaryCta.label}
-              </Button>
+              {opensEstimate ? (
+                <RequestEstimateButton variant="primary" size="lg" source="service-detail">
+                  {primaryCta.label}
+                </RequestEstimateButton>
+              ) : (
+                <Button to={primaryCta.to} variant="primary" size="lg">
+                  {primaryCta.label}
+                </Button>
+              )}
               <Button to="/projects" variant="outline-light" size="lg">
                 View Projects
               </Button>
@@ -220,6 +228,7 @@ export default function ServiceDetail() {
         description="Request an estimate online and we’ll follow up to confirm the details."
         primaryLabel={primaryCta.label}
         primaryTo={primaryCta.to}
+        primaryOpensEstimate={opensEstimate}
         secondaryLabel="Contact Us"
         secondaryTo="/contact"
       />

@@ -28,16 +28,17 @@ export function FormField({
   as = "input",
   children,
   className = "",
+  id,
   ...props
 }) {
-  const id = name;
+  const fieldId = id || name;
 
   return (
     <div className={className}>
-      <FieldLabel htmlFor={id}>{label}</FieldLabel>
+      <FieldLabel htmlFor={fieldId}>{label}</FieldLabel>
       {as === "textarea" ? (
         <textarea
-          id={id}
+          id={fieldId}
           name={name}
           required={required}
           placeholder={placeholder}
@@ -46,7 +47,7 @@ export function FormField({
         />
       ) : as === "select" ? (
         <select
-          id={id}
+          id={fieldId}
           name={name}
           required={required}
           className={fieldClassName()}
@@ -56,7 +57,7 @@ export function FormField({
         </select>
       ) : (
         <input
-          id={id}
+          id={fieldId}
           name={name}
           type={type}
           required={required}

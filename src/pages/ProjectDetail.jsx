@@ -7,6 +7,7 @@ import Container from "../components/ui/Container";
 import Section from "../components/ui/Section";
 import SectionEyebrow from "../components/ui/SectionEyebrow";
 import CtaStrip from "../components/ui/CtaStrip";
+import RequestEstimateButton from "../components/RequestEstimateButton";
 import { getProjectBySlug, getProjectPath, PROJECTS } from "../data/projects";
 import { getServicePath } from "../data/services";
 
@@ -76,9 +77,9 @@ export default function ProjectDetail() {
               {project.summary}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button to="/bookings" variant="primary" size="lg">
+              <RequestEstimateButton variant="primary" size="lg" source="project-detail">
                 Request an Estimate
-              </Button>
+              </RequestEstimateButton>
               {project.relatedServiceSlug ? (
                 <Button
                   to={getServicePath(project.relatedServiceSlug)}

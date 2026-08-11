@@ -6,6 +6,7 @@ import Section from "../components/ui/Section";
 import SectionEyebrow from "../components/ui/SectionEyebrow";
 import TrustItem from "../components/ui/TrustItem";
 import CtaStrip from "../components/ui/CtaStrip";
+import RequestEstimateButton from "../components/RequestEstimateButton";
 import { COMPANY } from "../data/site";
 import { BBB } from "../data/reviews";
 
@@ -76,9 +77,9 @@ export default function About() {
               Orlando and Tampa, FL.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button to="/bookings" variant="primary" size="lg">
+              <RequestEstimateButton variant="primary" size="lg" source="about-hero">
                 Request an Estimate
-              </Button>
+              </RequestEstimateButton>
               <Button to="/projects" variant="outline-light" size="lg">
                 View Projects
               </Button>

@@ -6,7 +6,8 @@ import Button from "../components/ui/Button";
 import Container from "../components/ui/Container";
 import Section from "../components/ui/Section";
 import SectionEyebrow from "../components/ui/SectionEyebrow";
-import { FormField, fieldClassName } from "../components/ui/FormControls";
+import { fieldClassName } from "../components/ui/FormControls";
+import EstimateRequestForm from "../components/EstimateRequestForm";
 import { COMPANY } from "../data/site";
 import { trackEvent, AnalyticsEvents } from "../lib/analytics";
 
@@ -14,18 +15,6 @@ const cleaningOptions = [
   "Standard Cleaning",
   "Deep Cleaning",
   "Move-Out Cleaning",
-];
-
-const projectTypes = [
-  "Flooring Installation",
-  "Flooring Repair",
-  "Drywall Installation",
-  "Drywall Repair",
-  "Interior Painting",
-  "Exterior Painting",
-  "Interior Design",
-  "Property Maintenance",
-  "Other",
 ];
 
 const timeWindows = [
@@ -37,17 +26,13 @@ const timeWindows = [
   "6:00 PM - 8:00 PM",
 ];
 
-// TODO: Optional project photo upload skipped for now.
-// Netlify Forms file uploads need multipart handling and careful production testing.
-// Revisit once a reliable upload path is confirmed.
-
 export default function Bookings() {
   const navigate = useNavigate();
   const [flow, setFlow] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
-  async function handleSubmit(event) {
+  async function handleCleaningSubmit(event) {
     event.preventDefault();
     setError("");
     setSubmitting(true);
@@ -66,12 +51,7 @@ export default function Bookings() {
         throw new Error("Form submission failed");
       }
 
-      trackEvent(
-        flow === "cleaning"
-          ? AnalyticsEvents.CLEANING_REQUEST_SUBMITTED
-          : AnalyticsEvents.ESTIMATE_SUBMITTED
-      );
-
+      trackEvent(AnalyticsEvents.CLEANING_REQUEST_SUBMITTED);
       navigate("/thank-you");
     } catch {
       setError(
@@ -92,7 +72,7 @@ export default function Bookings() {
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-7 text-brand-muted sm:text-lg sm:leading-8">
               Submit a request online and we’ll follow up to confirm the details.
-              This is a request — not an instant confirmed booking.
+              This is a request, not an instant confirmed booking.
             </p>
             <p className="mt-4 text-sm text-brand-muted">
               Hours: {COMPANY.hours.weekdays}. {COMPANY.hours.saturday}.
@@ -117,7 +97,7 @@ export default function Bookings() {
                 onClick={() => {
                   setFlow("estimate");
                   setError("");
-                  trackEvent(AnalyticsEvents.ESTIMATE_STARTED);
+                  trackEvent(AnalyticsEvents.ESTIMATE_STARTED, { source: "bookings" });
                 }}
                 className="rounded-section border border-brand-border bg-brand-cream p-8 text-left shadow-card transition hover:-translate-y-1 hover:shadow-soft"
               >
@@ -178,82 +158,9 @@ export default function Bookings() {
                 For flooring, drywall, painting, maintenance, and related projects.
               </p>
 
-              <form
-                name="onsite-estimate"
-                method="POST"
-                data-netlify="true"
-                netlify-honeypot="bot-field"
-                onSubmit={handleSubmit}
-                className="mt-8 space-y-5"
-              >
-                <input type="hidden" name="form-name" value="onsite-estimate" />
-                <input type="hidden" name="serviceType" value="Onsite Estimate" />
-                <p className="hidden">
-                  <label>
-                    Don’t fill this out if you’re human:{" "}
-                    <input name="bot-field" />
-                  </label>
-                </p>
-
-                <div className="grid gap-5 sm:grid-cols-2">
-                  <FormField label="Full Name" name="fullName" required placeholder="Your full name" />
-                  <FormField label="Phone Number" name="phone" type="tel" required placeholder="(555) 555-5555" />
-                </div>
-
-                <FormField label="Email Address" name="email" type="email" required placeholder="you@example.com" />
-
-                <FormField label="Project Type" name="projectType" as="select" required defaultValue="">
-                  <option value="" disabled>
-                    Select a project type
-                  </option>
-                  {projectTypes.map((type) => (
-                    <option key={type}>{type}</option>
-                  ))}
-                </FormField>
-
-                <FormField label="Project Address" name="address" required placeholder="Street address" />
-
-                <div className="grid gap-5 sm:grid-cols-2">
-                  <FormField label="Preferred Date" name="preferredDate" type="date" required />
-                  <FormField
-                    label="Preferred Time Window"
-                    name="preferredTime"
-                    as="select"
-                    required
-                    defaultValue=""
-                    hint="Business hours: Mon–Fri 8am–8pm, Sat 8am–5pm"
-                  >
-                    <option value="" disabled>
-                      Select a time window
-                    </option>
-                    {timeWindows.map((window) => (
-                      <option key={window}>{window}</option>
-                    ))}
-                  </FormField>
-                </div>
-
-                <FormField
-                  label="Project Details"
-                  name="projectDetails"
-                  as="textarea"
-                  required
-                  rows="5"
-                  placeholder="Tell us about the scope, rooms, timeline, or anything else we should know."
-                />
-
-                {error ? (
-                  <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">
-                    {error}{" "}
-                    <a href={`tel:${COMPANY.phoneTel}`} className="font-semibold underline">
-                      {COMPANY.phoneDisplay}
-                    </a>
-                  </div>
-                ) : null}
-
-                <Button type="submit" variant="secondary" size="lg" className="w-full" disabled={submitting}>
-                  {submitting ? "Submitting…" : "Submit Estimate Request"}
-                </Button>
-              </form>
+              <div className="mt-8">
+                <EstimateRequestForm idPrefix="bookings-estimate" />
+              </div>
             </div>
           ) : null}
 
@@ -280,7 +187,7 @@ export default function Bookings() {
                 method="POST"
                 data-netlify="true"
                 netlify-honeypot="bot-field"
-                onSubmit={handleSubmit}
+                onSubmit={handleCleaningSubmit}
                 className="mt-8 space-y-5"
               >
                 <input type="hidden" name="form-name" value="cleaning-service" />

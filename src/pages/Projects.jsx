@@ -1,11 +1,11 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
-import Button from "../components/ui/Button";
 import Container from "../components/ui/Container";
 import Section from "../components/ui/Section";
 import SectionEyebrow from "../components/ui/SectionEyebrow";
 import CtaStrip from "../components/ui/CtaStrip";
+import RequestEstimateButton from "../components/RequestEstimateButton";
 import {
   PROJECTS,
   getProjectCategories,
@@ -35,9 +35,9 @@ export default function Projects() {
               upgrades, cleaning, and a full kitchen transformation.
             </p>
             <div className="mt-8">
-              <Button to="/bookings" variant="primary" size="lg">
+              <RequestEstimateButton variant="primary" size="lg" source="projects-hero">
                 Request an Estimate
-              </Button>
+              </RequestEstimateButton>
             </div>
           </div>
         </Container>

@@ -23,6 +23,8 @@ import ReviewCard from "../components/ui/ReviewCard";
 import CtaStrip from "../components/ui/CtaStrip";
 import ProjectProgressShowcase from "../components/ProjectProgressShowcase";
 import OptimizedImage from "../components/ui/OptimizedImage";
+import RequestEstimateButton from "../components/RequestEstimateButton";
+import EstimateRequestForm from "../components/EstimateRequestForm";
 import { COMPANY } from "../data/site";
 import { SERVICES, getServicePath } from "../data/services";
 import { REVIEWS } from "../data/reviews";
@@ -63,10 +65,10 @@ const trustItems = [
 ];
 
 const whyChoose = [
-  "Clear communication",
-  "Professional workmanship",
-  "Respect for the property",
-  "Straightforward estimate process",
+  "A partner for every stage of home life: moves, upgrades, and everyday fixes",
+  "One team for flooring, drywall, painting, cleaning, and maintenance",
+  "Clear communication and respect for your property, every visit",
+  "Straightforward estimates so you can plan with confidence",
 ];
 
 const processSteps = [
@@ -127,9 +129,9 @@ export default function Home() {
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Button to="/bookings" variant="primary" size="lg">
+              <RequestEstimateButton variant="primary" size="lg" source="home-hero">
                 Request an Estimate
-              </Button>
+              </RequestEstimateButton>
               <Button to="/projects" variant="outline-light" size="lg">
                 View Our Work
               </Button>
@@ -224,8 +226,8 @@ export default function Home() {
           <div>
             <SectionHeading
               eyebrow="Why Choose EconoPro"
-              title="A smooth experience from start to finish"
-              description="We focus on the essentials that make home projects easier."
+              title="With you for the life of your home"
+              description="From your first project to the changes that come with every chapter: new floors, fresh paint, a deeper clean, or ongoing upkeep. EconoPro is here for the long haul. We’re the local team you can call again and again as your home and life evolve."
             />
 
             <ul className="mt-8 space-y-4">
@@ -301,12 +303,35 @@ export default function Home() {
         </Container>
       </Section>
 
+      {/* EMBEDDED ESTIMATE FORM */}
+      <Section tone="cream">
+        <Container className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <div>
+            <SectionEyebrow>Request an Estimate</SectionEyebrow>
+            <h2 className="mt-3 font-display text-display-md text-brand-navy text-balance">
+              Tell us about your project
+            </h2>
+            <p className="mt-4 text-base leading-7 text-brand-muted">
+              Share a few details and we’ll follow up to confirm next steps.
+              Prefer cleaning services?{" "}
+              <Link to="/bookings" className="font-semibold text-brand-navy hover:text-brand-gold">
+                Request cleaning here
+              </Link>
+              .
+            </p>
+          </div>
+
+          <div className="rounded-section border border-brand-border bg-white p-6 shadow-card sm:p-8">
+            <EstimateRequestForm idPrefix="home-estimate" buttonVariant="primary" />
+          </div>
+        </Container>
+      </Section>
+
       <CtaStrip
         eyebrow="Ready to get started?"
         title="Request an estimate or call us today"
         description="Tell us about your project and we’ll follow up to confirm the details."
         primaryLabel="Request an Estimate"
-        primaryTo="/bookings"
         secondaryLabel="Call Now"
         secondaryHref={`tel:${COMPANY.phoneTel}`}
       />

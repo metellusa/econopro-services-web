@@ -8,6 +8,7 @@ import SectionEyebrow from "../components/ui/SectionEyebrow";
 import SectionHeading from "../components/SectionHeading";
 import ServiceCard from "../components/ui/ServiceCard";
 import CtaStrip from "../components/ui/CtaStrip";
+import RequestEstimateButton from "../components/RequestEstimateButton";
 import { SERVICES, getServicePath } from "../data/services";
 
 const valuePoints = [
@@ -32,9 +33,9 @@ export default function Services() {
               assistance with clear communication and dependable results.
             </p>
             <div className="mt-8">
-              <Button to="/bookings" variant="primary" size="lg">
+              <RequestEstimateButton variant="primary" size="lg" source="services-hero">
                 Request an Estimate
-              </Button>
+              </RequestEstimateButton>
             </div>
           </div>
         </Container>
@@ -105,9 +106,9 @@ export default function Services() {
               <Button to="/financing-options" variant="primary" size="lg">
                 Explore Financing
               </Button>
-              <Button to="/bookings" variant="outline-light" size="lg">
+              <RequestEstimateButton variant="outline-light" size="lg" source="services-financing">
                 Request Estimate
-              </Button>
+              </RequestEstimateButton>
             </div>
           </div>
         </Container>
