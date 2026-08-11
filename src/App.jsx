@@ -26,7 +26,9 @@ import AdminProjects from "./pages/portals/AdminProjects";
 import AdminProjectForm from "./pages/portals/AdminProjectForm";
 import AdminProjectDetail from "./pages/portals/AdminProjectDetail";
 import AdminTemplates from "./pages/portals/AdminTemplates";
+import AdminReviews from "./pages/portals/AdminReviews";
 import ContractorHome from "./pages/portals/ContractorHome";
+import ContractorProjectDetail from "./pages/portals/ContractorProjectDetail";
 import ClientHome from "./pages/portals/ClientHome";
 import { APP_ROLES, STAFF_ROLES } from "./lib/roles";
 
@@ -42,6 +44,7 @@ function MarketingLayout() {
 const adminNav = [
   { to: "/admin", label: "Overview", end: true },
   { to: "/admin/projects", label: "Projects" },
+  { to: "/admin/reviews", label: "Reviews" },
   { to: "/admin/templates", label: "Templates" },
 ];
 
@@ -89,6 +92,7 @@ export default function App() {
         <Route path="projects/:projectId" element={<AdminProjectDetail />} />
         <Route path="projects/:projectId/edit" element={<AdminProjectForm />} />
         <Route path="templates" element={<AdminTemplates />} />
+        <Route path="reviews" element={<AdminReviews />} />
       </Route>
 
       <Route
@@ -98,12 +102,15 @@ export default function App() {
             <PortalShell
               title="EconoPro Contractor"
               accent="Field Portal"
-              navItems={[{ to: "/contractor", label: "Overview", end: true }]}
+              navItems={[
+                { to: "/contractor", label: "Jobs", end: true },
+              ]}
             />
           </ProtectedRoute>
         }
       >
         <Route index element={<ContractorHome />} />
+        <Route path="projects/:projectId" element={<ContractorProjectDetail />} />
       </Route>
 
       <Route

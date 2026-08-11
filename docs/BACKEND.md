@@ -116,6 +116,16 @@ Apply `supabase/migrations/20260811180000_phase3_phases_templates.sql`.
 - `client_visible` flags keep internal phases/tasks out of client policies
 - Staff override of required-task completion is audited via `staff_override` activity
 
+## Phase 4: Contractor portal
+
+Apply `supabase/migrations/20260811190000_phase4_contractor_progress.sql`.
+
+- `/contractor` mobile-first job list
+- `/contractor/projects/:id` tasks, progress submission, issue reporting, camera upload
+- Progress updates keep **internal_note** and **proposed_client_update** separate
+- `/admin/reviews` staff approve/reject/publish queue + open issues
+- Photos: 8MB max, image types only; storage policies allow assigned contractors
+
 ## Production build
 
 ```bash
