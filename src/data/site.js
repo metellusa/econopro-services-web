@@ -25,12 +25,12 @@ export const NAV_LINKS = [
 ];
 
 export const FOOTER_SERVICE_LINKS = [
-  { label: "Flooring", to: "/services" },
-  { label: "Drywall", to: "/services" },
-  { label: "Painting", to: "/services" },
-  { label: "Cleaning", to: "/services" },
-  { label: "Property Maintenance", to: "/services" },
-  { label: "Design Assistance", to: "/services" },
+  { label: "Flooring", to: "/services/flooring" },
+  { label: "Drywall", to: "/services/drywall" },
+  { label: "Painting", to: "/services/painting" },
+  { label: "Cleaning", to: "/services/cleaning" },
+  { label: "Property Maintenance", to: "/services/property-maintenance" },
+  { label: "Design Assistance", to: "/services/design-assistance" },
 ];
 
 export const FOOTER_COMPANY_LINKS = [

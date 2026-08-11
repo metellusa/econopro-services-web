@@ -1,181 +1,145 @@
-import {
-  BadgeDollarSign,
-  Brush,
-  HandHelping,
-  Home,
-  PaintBucket,
-  Sparkles,
-  ChevronRight,
-  Sofa,
-} from "lucide-react";
+import { Link } from "react-router-dom";
+import { BadgeDollarSign, CheckCircle2 } from "lucide-react";
 
+import Button from "../components/ui/Button";
+import Container from "../components/ui/Container";
+import Section from "../components/ui/Section";
+import SectionEyebrow from "../components/ui/SectionEyebrow";
 import SectionHeading from "../components/SectionHeading";
-import ServiceCard from "../components/ServiceCard";
+import ServiceCard from "../components/ui/ServiceCard";
+import CtaStrip from "../components/ui/CtaStrip";
+import { SERVICES, getServicePath } from "../data/services";
 
-const services = [
-  {
-    icon: Home,
-    title: "Flooring Installation & Repair",
-    description:
-      "Beautiful, durable flooring solutions for living spaces, rentals, and investment properties.",
-    bullets: ["Tile", "Vinyl plank", "Laminate", "Hardwood"],
-  },
-  {
-    icon: Brush,
-    title: "Drywall Services",
-    description:
-      "From patchwork to full drywall updates, we help restore walls and ceilings with a polished look.",
-    bullets: ["Drywall installation", "Drywall repair", "Texture matching"],
-  },
-  {
-    icon: PaintBucket,
-    title: "Interior & Exterior Painting",
-    description:
-      "Freshen up your property with careful prep, crisp lines, and high-quality workmanship.",
-    bullets: [
-      "Interior painting", "Exterior painting", "Touch-ups and repainting",
-    ],
-  },
-  {
-    icon: Sparkles,
-    title: "Cleaning Services",
-    description:
-      "Reliable residential cleaning options that keep your home looking refreshed and guest-ready.",
-    bullets: [
-      "Standard cleaning",
-      "Deep cleaning",
-      "Move-out cleaning",
-    ],
-  },
-  {
-    icon: HandHelping,
-    title: "General Property Maintenance",
-    description:
-      "Practical handyman help for property owners who want dependable service without surprises.",
-    bullets: [
-      "Minor repairs",
-      "Punch-list items",
-      "Ongoing upkeep support",
-    ],
-  },
-  {
-    icon: Sofa,
-    title: "Interior Design Services",
-    description:
-      "Home styling and color guidance to help you plan your space with confidence.",
-    bullets: [
-      "In-home consultation",
-      "Design mockups",
-      "Color & décor recommendations",
-    ],
-  },
-  {
-    icon: BadgeDollarSign,
-    title: "Flexible Payment Options",
-    description:
-      "Convenient monthly payment plans are available to make larger projects more manageable.",
-    bullets: [
-      "Budget-friendly options",
-      "Clear communication",
-      "Project-friendly flexibility",
-    ],
-  },
+const valuePoints = [
+  "Clear communication from request to completion",
+  "Clean, professional workmanship",
+  "Practical solutions for homes and rentals",
+  "Financing available for qualifying projects",
 ];
 
 export default function Services() {
   return (
     <main>
-      <section className="bg-hero-glow py-20">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <Section tone="cream" className="bg-hero-glow">
+        <Container>
           <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-gold">
-              Our Services
-            </p>
-            <h1 className="mt-4 text-5xl font-bold tracking-tight text-brand-navy sm:text-6xl">
-              Reliable home improvement and cleaning services for Orlando and Tampa
+            <SectionEyebrow>Our Services</SectionEyebrow>
+            <h1 className="mt-4 font-display text-display-xl text-brand-navy text-balance">
+              Home improvement and cleaning services for Orlando and Tampa
             </h1>
-            <p className="mt-6 text-lg leading-8 text-slate-600">
-              EconoPro Services provides practical, high-quality solutions for
-              homeowners, landlords, and busy families who want dependable work,
-              clear communication, and professional results.
+            <p className="mt-6 max-w-2xl text-base leading-7 text-brand-muted sm:text-lg sm:leading-8">
+              Flooring, drywall, painting, cleaning, maintenance, and design
+              assistance with clear communication and dependable results.
             </p>
+            <div className="mt-8">
+              <Button to="/bookings" variant="primary" size="lg">
+                Request an Estimate
+              </Button>
+            </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
-      <section className="py-20">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <Section tone="white">
+        <Container>
           <SectionHeading
             eyebrow="What We Offer"
-            title="Built for homeowners, property managers, and busy families"
-            description="Whether you need a repair, a refresh, or recurring help around the home, EconoPro Services offers dependable solutions with professional care."
+            title="Solutions for your home and property"
+            description="Choose a service to learn more, then request an estimate online."
             centered
           />
 
-          <div className="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {services.map((service) => (
-              <ServiceCard key={service.title} {...service} />
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+            {SERVICES.map((service) => (
+              <ServiceCard
+                key={service.slug}
+                title={service.shortTitle}
+                description={service.description}
+                image={service.image}
+                to={getServicePath(service.slug)}
+                linkLabel="Learn More"
+              />
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
-      <section className="bg-white py-20">
-        <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-2 lg:px-8">
-          <div className="rounded-[2rem] border border-slate-200 bg-brand-cream p-8 shadow-sm">
-            <h2 className="text-2xl font-semibold text-brand-navy">
-              Why customers choose EconoPro
+      <Section tone="cream">
+        <Container className="grid gap-8 lg:grid-cols-2">
+          <div className="rounded-section border border-brand-border bg-white p-8 shadow-card">
+            <SectionEyebrow>Why EconoPro</SectionEyebrow>
+            <h2 className="mt-4 font-display text-display-md text-brand-navy">
+              Dependable work with a straightforward process
             </h2>
-            <div className="mt-6 space-y-4 text-slate-600">
-              <p>
-                We focus on the things that matter most: showing up, communicating
-                clearly, respecting your property, and delivering work you can
-                feel good about.
-              </p>
-              <p>
-                Our goal is simple: deliver clean, professional results with clear
-                communication and no surprises. We treat every home like it’s our
-                own and take pride in getting the job done right the first time.
-                That's why both homeowners and home flippers alike work with us.
-              </p>
-              <p>
-                Flexible payment options are also available, including convenient
-                monthly plans for qualifying projects.
-              </p>
-            </div>
+            <ul className="mt-8 space-y-4">
+              {valuePoints.map((item) => (
+                <li key={item} className="flex items-start gap-3">
+                  <CheckCircle2
+                    size={18}
+                    className="mt-0.5 shrink-0 text-brand-gold"
+                    aria-hidden="true"
+                  />
+                  <span className="text-sm leading-7 text-brand-muted sm:text-base">
+                    {item}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          <div className="rounded-[2rem] bg-brand-navy p-8 text-white shadow-soft">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-gold">
-              Ready to get started?
+          <div className="rounded-section bg-brand-navy p-8 text-white shadow-soft">
+            <div className="inline-flex rounded-2xl bg-white/10 p-3 text-brand-gold">
+              <BadgeDollarSign size={24} aria-hidden="true" />
+            </div>
+            <p className="mt-5 text-sm font-semibold uppercase tracking-[0.18em] text-brand-gold">
+              Financing
             </p>
-            <h2 className="mt-4 text-3xl font-bold">
-              Tell us what you need and request your estimate online
+            <h2 className="mt-3 font-display text-display-md text-white">
+              Flexible payment options for larger projects
             </h2>
-            <p className="mt-4 text-lg leading-8 text-slate-300">
-              Need flooring, drywall, painting, maintenance, or cleaning? Submit
-              your request and we’ll follow up to confirm the details.
+            <p className="mt-4 text-base leading-7 text-slate-300">
+              Convenient monthly plans may be available through our financing
+              partners to help make your project more manageable.
             </p>
-
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <a
-                href="/bookings"
-                className="inline-flex items-center justify-center rounded-full bg-white px-6 py-4 text-sm font-semibold text-brand-navy transition hover:-translate-y-0.5"
-              >
-                Book Now
-                <ChevronRight size={18} className="ml-2" />
-              </a>
-
-              <a
-                href="/contact"
-                className="inline-flex items-center justify-center rounded-full border border-white/20 px-6 py-4 text-sm font-semibold text-white"
-              >
-                Contact Us
-              </a>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Button to="/financing-options" variant="primary" size="lg">
+                Explore Financing
+              </Button>
+              <Button to="/bookings" variant="outline-light" size="lg">
+                Request Estimate
+              </Button>
             </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
+
+      <Section tone="white">
+        <Container>
+          <div className="rounded-section border border-brand-border bg-brand-cream px-8 py-10 text-center">
+            <h2 className="font-display text-display-md text-brand-navy">
+              Looking for a specific service?
+            </h2>
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+              {SERVICES.map((service) => (
+                <Link
+                  key={service.slug}
+                  to={getServicePath(service.slug)}
+                  className="rounded-full border border-brand-border bg-white px-4 py-2 text-sm font-medium text-brand-navy transition hover:border-brand-gold/40"
+                >
+                  {service.shortTitle}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      <CtaStrip
+        title="Tell us what you need"
+        description="Request an estimate online and we’ll follow up to confirm the details."
+        secondaryLabel="Contact Us"
+        secondaryTo="/contact"
+      />
     </main>
   );
 }

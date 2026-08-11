@@ -23,45 +23,14 @@ import ReviewCard from "../components/ui/ReviewCard";
 import CtaStrip from "../components/ui/CtaStrip";
 import ProjectProgressShowcase from "../components/ProjectProgressShowcase";
 import { COMPANY } from "../data/site";
+import { SERVICES, getServicePath } from "../data/services";
 
-const servicesPreview = [
-  {
-    title: "Flooring",
-    description: "Tile, vinyl plank, laminate, and hardwood installation and repair.",
-    image: "/after-foyer-pic.jpg",
-    to: "/services",
-  },
-  {
-    title: "Drywall",
-    description: "Installation, repairs, patching, and texture matching.",
-    image: "/kitchen-demo-2.jpeg",
-    to: "/services",
-  },
-  {
-    title: "Painting",
-    description: "Interior and exterior painting with clean, professional finishes.",
-    image: "/after-room-painted.png",
-    to: "/services",
-  },
-  {
-    title: "Cleaning",
-    description: "Standard, deep, and move-out cleaning for homes and properties.",
-    image: "/deep-cleaning.jpeg",
-    to: "/services",
-  },
-  {
-    title: "Property Maintenance",
-    description: "Practical repairs and upkeep support for homeowners and landlords.",
-    image: "/composite-panel-installation-after-1.png",
-    to: "/services",
-  },
-  {
-    title: "Design Assistance",
-    description: "In-home consultation, mockups, and color guidance for your space.",
-    image: "/kitchen-finished-1.jpeg",
-    to: "/services",
-  },
-];
+const servicesPreview = SERVICES.map((service) => ({
+  title: service.shortTitle,
+  description: service.description,
+  image: service.image,
+  to: getServicePath(service.slug),
+}));
 
 const trustItems = [
   {

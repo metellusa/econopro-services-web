@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import SiteShell from "./components/SiteShell";
 import Home from "./pages/Home";
 import Services from "./pages/Services";
+import ServiceDetail from "./pages/ServiceDetail";
 import Bookings from "./pages/Bookings";
 import Gallery from "./pages/Gallery";
 import Faq from "./pages/Faq";
@@ -17,6 +18,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/services" element={<Services />} />
+        <Route path="/services/:slug" element={<ServiceDetail />} />
         <Route path="/bookings" element={<Bookings />} />
         <Route path="/financing-options" element={<FinancingOptions />} />
         <Route path="/gallery" element={<Gallery />} />
