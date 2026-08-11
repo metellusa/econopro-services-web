@@ -89,6 +89,23 @@ Guest/client-facing queries must never expose `clients.internal_notes` or contra
 
 Frontend `ProtectedRoute` checks roles for UX, but **RLS is the source of truth**.
 
+## Phase 2: Project management
+
+Apply `supabase/migrations/20260811170000_phase2_project_management.sql` after Phase 1.
+
+Staff routes:
+- `/admin/projects` dashboard (search + filters)
+- `/admin/projects/new` create project / guest client
+- `/admin/projects/:id` detail tabs (Overview, Team, Client, Files, Notes, Activity)
+- `/admin/projects/:id/edit`
+
+Data notes:
+- `projects.client_summary` is client-safe.
+- `project_internal_notes` is a separate staff-only table (never exposed to clients/guests).
+- Assignments live in `project_assignees`.
+- Files support `internal` vs `client` visibility.
+- Activity is written automatically on create/update/assignment changes.
+
 ## Production build
 
 ```bash

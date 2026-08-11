@@ -22,6 +22,9 @@ import ResetPassword from "./pages/auth/ResetPassword";
 import UpdatePassword from "./pages/auth/UpdatePassword";
 import ProjectAccess from "./pages/ProjectAccess";
 import AdminHome from "./pages/portals/AdminHome";
+import AdminProjects from "./pages/portals/AdminProjects";
+import AdminProjectForm from "./pages/portals/AdminProjectForm";
+import AdminProjectDetail from "./pages/portals/AdminProjectDetail";
 import ContractorHome from "./pages/portals/ContractorHome";
 import ClientHome from "./pages/portals/ClientHome";
 import { APP_ROLES, STAFF_ROLES } from "./lib/roles";
@@ -34,6 +37,11 @@ function MarketingLayout() {
     </SiteShell>
   );
 }
+
+const adminNav = [
+  { to: "/admin", label: "Overview", end: true },
+  { to: "/admin/projects", label: "Projects" },
+];
 
 export default function App() {
   return (
@@ -68,12 +76,16 @@ export default function App() {
             <PortalShell
               title="EconoPro Admin"
               accent="Staff Portal"
-              navItems={[{ to: "/admin", label: "Overview", end: true }]}
+              navItems={adminNav}
             />
           </ProtectedRoute>
         }
       >
         <Route index element={<AdminHome />} />
+        <Route path="projects" element={<AdminProjects />} />
+        <Route path="projects/new" element={<AdminProjectForm />} />
+        <Route path="projects/:projectId" element={<AdminProjectDetail />} />
+        <Route path="projects/:projectId/edit" element={<AdminProjectForm />} />
       </Route>
 
       <Route

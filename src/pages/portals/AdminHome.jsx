@@ -1,5 +1,6 @@
 import Container from "../../components/ui/Container";
 import Section from "../../components/ui/Section";
+import Button from "../../components/ui/Button";
 
 export default function AdminHome() {
   return (
@@ -12,14 +13,14 @@ export default function AdminHome() {
           Operations portal
         </h1>
         <p className="mt-4 max-w-2xl text-sm leading-7 text-brand-muted sm:text-base">
-          Authentication and guest-client foundations are live. Project
-          management tools arrive in the next phases.
+          Manage guest and registered clients, assign contractors, and track
+          project status. Internal notes stay staff-only.
         </p>
-        <ul className="mt-8 space-y-3 text-sm text-brand-ink">
-          <li>Staff and admin access is enforced by Supabase RLS + role checks.</li>
-          <li>Clients can exist as guests without portal accounts.</li>
-          <li>Guest project links use hashed, revocable tokens.</li>
-        </ul>
+        <div className="mt-8">
+          <Button to="/admin/projects" variant="secondary" size="lg">
+            Open projects
+          </Button>
+        </div>
       </Container>
     </Section>
   );
