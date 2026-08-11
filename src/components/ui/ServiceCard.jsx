@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import OptimizedImage from "./OptimizedImage";
+import { trackEvent, AnalyticsEvents } from "../../lib/analytics";
 
 export default function ServiceCard({
   icon: Icon,
@@ -10,11 +12,20 @@ export default function ServiceCard({
   to,
   linkLabel = "Learn More",
 }) {
+  function handleNavigate() {
+    if (to?.startsWith("/services")) {
+      trackEvent(AnalyticsEvents.SERVICE_CTA_CLICKED, { service: title });
+    }
+    if (to?.startsWith("/projects")) {
+      trackEvent(AnalyticsEvents.PROJECT_CTA_CLICKED, { project: title });
+    }
+  }
+
   const content = (
     <>
       {image ? (
         <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-brand-cream-dark">
-          <img
+          <OptimizedImage
             src={image}
             alt=""
             className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
@@ -59,7 +70,7 @@ export default function ServiceCard({
 
   if (to) {
     return (
-      <Link to={to} className={className}>
+      <Link to={to} className={className} onClick={handleNavigate}>
         {content}
       </Link>
     );

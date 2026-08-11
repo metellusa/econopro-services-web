@@ -22,6 +22,7 @@ import TrustItem from "../components/ui/TrustItem";
 import ReviewCard from "../components/ui/ReviewCard";
 import CtaStrip from "../components/ui/CtaStrip";
 import ProjectProgressShowcase from "../components/ProjectProgressShowcase";
+import OptimizedImage from "../components/ui/OptimizedImage";
 import { COMPANY } from "../data/site";
 import { SERVICES, getServicePath } from "../data/services";
 import { REVIEWS } from "../data/reviews";
@@ -101,10 +102,11 @@ export default function Home() {
       {/* HERO */}
       <section className="relative overflow-hidden bg-brand-navy text-white">
         <div className="absolute inset-0">
-          <img
+          <OptimizedImage
             src="/kitchen-finished-1.jpeg"
-            alt="Completed kitchen renovation by EconoPro Services"
+            alt=""
             className="h-full w-full object-cover opacity-40"
+            loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-brand-navy via-brand-navy/90 to-brand-navy/55" />
         </div>
@@ -154,10 +156,11 @@ export default function Home() {
 
           <div className="relative">
             <div className="overflow-hidden rounded-section border border-white/10 shadow-soft">
-              <img
+              <OptimizedImage
                 src="/kitchen-finished-1.jpeg"
                 alt="Finished kitchen project with island and modern finishes"
                 className="aspect-[4/3] w-full object-cover"
+                loading="eager"
               />
             </div>
             <a

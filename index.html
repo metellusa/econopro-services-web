@@ -41,7 +41,7 @@
       content="Flooring, drywall, painting, cleaning, and handyman services in Orlando, Tampa, and surrounding areas."
     />
     <meta property="og:url" content="https://econoproservices.com/" />
-    <meta property="og:image" content="https://econoproservices.com/logo.jpg" />
+    <meta property="og:image" content="https://econoproservices.com/kitchen-finished-1.webp" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -50,7 +50,7 @@
       name="twitter:description"
       content="Flooring, drywall, painting, cleaning, and handyman services in Orlando, Tampa, and surrounding areas."
     />
-    <meta name="twitter:image" content="https://econoproservices.com/logo.jpg" />
+    <meta name="twitter:image" content="https://econoproservices.com/kitchen-finished-1.webp" />
 
     <!-- Local Business Schema -->
     <script type="application/ld+json">
@@ -60,7 +60,7 @@
         "name": "EconoPro Services",
         "url": "https://econoproservices.com/",
         "logo": "https://econoproservices.com/logo.jpg",
-        "image": "https://econoproservices.com/logo.jpg",
+        "image": "https://econoproservices.com/kitchen-finished-1.webp",
         "description": "EconoPro Services provides flooring installation and repair, drywall services, interior and exterior painting, house cleaning, and general property maintenance in Orlando, Tampa, and surrounding areas.",
         "telephone": "+1-813-362-9287",
         "email": "admin@econoproservices.com",
@@ -79,9 +79,24 @@
           "addressRegion": "FL",
           "addressCountry": "US"
         },
-        "openingHours": "Mo-Fr 08:00-20:00",
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "08:00",
+            "closes": "20:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Saturday",
+            "opens": "08:00",
+            "closes": "17:00"
+          }
+        ],
         "priceRange": "$$",
-        "sameAs": []
+        "sameAs": [
+          "https://www.bbb.org/us/fl/orlando/profile/handyman/econopro-services-llc-0733-235980930"
+        ]
       }
     </script>
   </head>

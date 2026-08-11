@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import SiteShell from "./components/SiteShell";
+import PageMeta from "./components/seo/PageMeta";
 import Home from "./pages/Home";
 import Services from "./pages/Services";
 import ServiceDetail from "./pages/ServiceDetail";
@@ -16,6 +17,7 @@ import Reviews from "./pages/Reviews";
 export default function App() {
   return (
     <SiteShell>
+      <PageMeta />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/services" element={<Services />} />

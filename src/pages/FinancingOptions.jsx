@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BadgeDollarSign, ChevronRight, ShieldCheck } from "lucide-react";
+import { trackEvent, AnalyticsEvents } from "../lib/analytics";
 
 export default function FinancingOptions() {
   const [loanAmount, setLoanAmount] = useState("");
@@ -10,6 +11,8 @@ export default function FinancingOptions() {
     const numericAmount = String(loanAmount).replace(/[^\d]/g, "");
 
     if (!numericAmount) return;
+
+    trackEvent(AnalyticsEvents.FINANCING_CLICKED, { loanAmount: numericAmount });
 
     const acornUrl = `https://www.acornfinance.com/pre-qualify/?d=F3ZCC&utm_medium=web_pre_qual_link&loanAmount=${numericAmount}`;
 

@@ -12,6 +12,7 @@ import {
 import Button from "./ui/Button";
 import Container from "./ui/Container";
 import SectionEyebrow from "./ui/SectionEyebrow";
+import OptimizedImage from "./ui/OptimizedImage";
 
 const projectSteps = [
   {
@@ -133,7 +134,7 @@ export default function ProjectProgressShowcase() {
                   aria-label={`View full image for ${step.title}`}
                 >
                   <div className="relative aspect-[4/5] overflow-hidden bg-brand-navy-deep">
-                    <img
+                    <OptimizedImage
                       src={step.image}
                       alt={step.title}
                       className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
@@ -206,7 +207,10 @@ export default function ProjectProgressShowcase() {
             </button>
 
             <img
-              src={selectedStep.image}
+              src={selectedStep.image.replace(/\.(png|jpe?g)$/i, ".webp")}
+              onError={(event) => {
+                event.currentTarget.src = selectedStep.image;
+              }}
               alt={selectedStep.title}
               className="max-h-[85vh] max-w-full rounded-2xl object-contain shadow-2xl"
             />

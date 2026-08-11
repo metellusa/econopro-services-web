@@ -8,6 +8,7 @@ import Section from "../components/ui/Section";
 import SectionEyebrow from "../components/ui/SectionEyebrow";
 import { FormField, fieldClassName } from "../components/ui/FormControls";
 import { COMPANY } from "../data/site";
+import { trackEvent, AnalyticsEvents } from "../lib/analytics";
 
 const cleaningOptions = [
   "Standard Cleaning",
@@ -65,6 +66,12 @@ export default function Bookings() {
         throw new Error("Form submission failed");
       }
 
+      trackEvent(
+        flow === "cleaning"
+          ? AnalyticsEvents.CLEANING_REQUEST_SUBMITTED
+          : AnalyticsEvents.ESTIMATE_SUBMITTED
+      );
+
       navigate("/thank-you");
     } catch {
       setError(
@@ -93,6 +100,7 @@ export default function Bookings() {
             <a
               href={`tel:${COMPANY.phoneTel}`}
               className="mt-4 inline-flex text-sm font-semibold text-brand-navy hover:text-brand-gold"
+              onClick={() => trackEvent(AnalyticsEvents.PHONE_CLICKED, { location: "bookings" })}
             >
               Prefer to talk? Call {COMPANY.phoneDisplay}
             </a>
@@ -109,6 +117,7 @@ export default function Bookings() {
                 onClick={() => {
                   setFlow("estimate");
                   setError("");
+                  trackEvent(AnalyticsEvents.ESTIMATE_STARTED);
                 }}
                 className="rounded-section border border-brand-border bg-brand-cream p-8 text-left shadow-card transition hover:-translate-y-1 hover:shadow-soft"
               >
@@ -131,6 +140,7 @@ export default function Bookings() {
                 onClick={() => {
                   setFlow("cleaning");
                   setError("");
+                  trackEvent(AnalyticsEvents.CLEANING_REQUEST_STARTED);
                 }}
                 className="rounded-section border border-brand-border bg-brand-navy p-8 text-left text-white shadow-soft transition hover:-translate-y-1"
               >

@@ -1,32 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-  <url>
-    <loc>https://econoproservices.com/</loc>
-  </url>
-
-  <url>
-    <loc>https://econoproservices.com/services</loc>
-  </url>
-
-  <url>
-    <loc>https://econoproservices.com/bookings</loc>
-  </url>
-
-  <url>
-    <loc>https://econoproservices.com/financing-options</loc>
-  </url>
-
-  <url>
-    <loc>https://econoproservices.com/gallery</loc>
-  </url>
-
-  <url>
-    <loc>https://econoproservices.com/faq</loc>
-  </url>
-
-  <url>
-    <loc>https://econoproservices.com/contact</loc>
-  </url>
-
+  <url><loc>https://econoproservices.com/</loc></url>
+  <url><loc>https://econoproservices.com/services</loc></url>
+  <url><loc>https://econoproservices.com/services/flooring</loc></url>
+  <url><loc>https://econoproservices.com/services/drywall</loc></url>
+  <url><loc>https://econoproservices.com/services/painting</loc></url>
+  <url><loc>https://econoproservices.com/services/cleaning</loc></url>
+  <url><loc>https://econoproservices.com/services/property-maintenance</loc></url>
+  <url><loc>https://econoproservices.com/services/design-assistance</loc></url>
+  <url><loc>https://econoproservices.com/bookings</loc></url>
+  <url><loc>https://econoproservices.com/financing-options</loc></url>
+  <url><loc>https://econoproservices.com/projects</loc></url>
+  <url><loc>https://econoproservices.com/projects/kitchen-renovation</loc></url>
+  <url><loc>https://econoproservices.com/projects/custom-foyer-flooring</loc></url>
+  <url><loc>https://econoproservices.com/projects/kitchen-tile-flooring</loc></url>
+  <url><loc>https://econoproservices.com/projects/interior-painting</loc></url>
+  <url><loc>https://econoproservices.com/projects/exterior-composite-panels</loc></url>
+  <url><loc>https://econoproservices.com/projects/move-out-deep-cleaning</loc></url>
+  <url><loc>https://econoproservices.com/about</loc></url>
+  <url><loc>https://econoproservices.com/reviews</loc></url>
+  <url><loc>https://econoproservices.com/faq</loc></url>
+  <url><loc>https://econoproservices.com/contact</loc></url>
 </urlset>
